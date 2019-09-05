@@ -1,15 +1,23 @@
 <template>
-	<div>
-		<listRestaurants></listRestaurants>
+	<div class="container-fluid">
+		<headerApp class="row"></headerApp>
+		<div class="main row">
+			<googleMap class="col"></googleMap>
+			<listRestaurants class="col"></listRestaurants>
+		</div>
 	</div>
 </template>
 
 <script>
-import listRestaurants from './components/listRestaurants.vue'
+import GoogleMap from './components/GoogleMap'
+import ListRestaurants from './components/ListRestaurants.vue'
+import HeaderApp from './components/HeaderApp.vue'
 
 export default {
 	components: {
-		listRestaurants
+		ListRestaurants,
+		GoogleMap,
+		HeaderApp
 	}
 }
 </script>
@@ -18,5 +26,14 @@ export default {
 body, html{
 	padding: 0;
 	margin: 0;
+	height: 100%;
 }
+.container-fluid{
+	height: 100%;
+}
+.main{
+	height: 90%;
+}
+
+
 </style>

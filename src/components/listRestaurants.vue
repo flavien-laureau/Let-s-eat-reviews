@@ -1,8 +1,8 @@
 <template>
-	<section id="main">
+	<section id="restaurants">
 		<div v-for="restau in restaurants" class="restau">
 			<h1 class="name">{{ restau.restaurantName }}</h1>
-			<p class="adsress">{{ restau.address }}</p>
+			<p class="address">{{ restau.address }}</p>
 			<p class="rating">{{ restau.average }}</p>
 		</div>
 	</section>
