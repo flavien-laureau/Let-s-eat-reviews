@@ -1,14 +1,18 @@
 <template>
 	<section id="restaurants">
-		<div v-for="restau in restaurants" class="restau">
-			<h1 class="name">{{ restau.restaurantName }}</h1>
-			<p class="address">{{ restau.address }}</p>
-			<p class="rating">{{ restau.average }}</p>
-		</div>
+			<div v-for="restau in restaurants" class="restau">
+				<a href="#" class="more">Voir les avis</a>
+				<div class="img-wrapper"><img class='img-restau' src="http://lorempixel.com/150/150/fashion" alt="" /></div>
+				<h1 class="name">{{ restau.restaurantName }}</h1>
+				<hr class="hr">
+				<p class="address">{{ restau.address }}</p>
+				<p class="rating">{{ restau.average }}</p>
+			</div>
 	</section>
 </template>
 
 <script>
+
 
 export default {
 	data() {
@@ -84,6 +88,55 @@ export default {
 			}); 
 			this.restaurants[i].average = m/n
 		}
+	},
+	mounted() {
+		const imgs = document.querySelectorAll('.img-restau')
+		const imgsWrapper = document.querySelectorAll('.img-wrapper')
+		const links = document.querySelectorAll('.more')
+		
+		imgs.forEach(img => {
+			img.addEventListener('mouseover', function() {
+				img.parentElement.previousElementSibling.style.opacity = "1";
+				img.style.width = "160px";
+			});
+			img.addEventListener('mouseout', function() {
+				img.parentElement.previousElementSibling.style.opacity = "0";
+				img.style.width = "150px";
+			});
+		});
+
+		imgsWrapper.forEach(wrapper => {
+			wrapper.addEventListener('mouseover', function() {
+				wrapper.style.padding = "5px";
+				wrapper.style.transform = "rotate(5deg)";
+			});
+			wrapper.addEventListener('mouseout', function() {
+				wrapper.style.padding = "10px";
+				wrapper.style.transform = "rotate(0deg)";
+				
+			});
+		});
+
+		links.forEach(link => {
+			link.addEventListener('mouseover', function() {
+				link.style.opacity = "1";
+				link.nextElementSibling.firstChild.style.width = "160px";
+				link.nextElementSibling.style.padding = "5px";
+				link.nextElementSibling.style.transform = "rotate(5deg)";
+
+			});
+			link.addEventListener('mouseout', function() {
+				link.style.opacity = "0";
+				link.nextElementSibling.firstChild.style.width = "150px";
+				link.nextElementSibling.style.padding = "10px";
+				link.nextElementSibling.style.transform = "rotate(0deg)";
+			});
+		});
+
+		/**
+		 * padding:5px;
+    		transform: rotate(5deg);
+		 */
 	}
 
 }

@@ -2,7 +2,6 @@
 	<div class="container-fluid">
 		<headerApp class="row"></headerApp>
 		<div class="main row">
-			<googleMap class="col"></googleMap>
 			<listRestaurants class="col"></listRestaurants>
 		</div>
 	</div>
