@@ -1,72 +1,46 @@
 <template>
 	<section id="restaurants">
-			<div v-for="restau in restaurants" class="restau">
-				<a href="#" class="more">Voir les avis</a>
-				<div class="img-wrapper"><img class='img-restau' src="http://lorempixel.com/150/150/fashion" alt="" /></div>
-				<h1 class="name">{{ restau.restaurantName }}</h1>
+			<div v-for="restau in restaurants" :key="restau.id" class="restau">
+				<a class="more" data-toggle="modal" :data-target="`#modal` + restau.id" >Voir les avis</a>
+				<div class="img-wrapper" data-toggle="modal" :data-target="`#modal` + restau.id"><img class='img-restau' src="https://picsum.photos/150/150"/></div>
+				<h2 class="name">{{ restau.restaurantName }}</h2>
 				<hr class="hr">
 				<p class="address">{{ restau.address }}</p>
-				<p class="rating">{{ restau.average }}</p>
+				<p class="rating">{{ restau.average }}/5</p>
+				
+				<!-- Modal -->
+				<div class="modal fade" :id="`modal` + restau.id" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 class="modal-title">{{ restau.restaurantName }}</h3>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<div class="modal-body" v-for="rating in ratings[restau.id-1]">
+							{{ rating }}
+						</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+			
 	</section>
 </template>
 
 <script>
-
+import restaurants from './restaurants.json';
 
 export default {
 	data() {
 		return {
-			restaurants: [
-				{
-				"restaurantName":"Bronco",
-				"address":"39 Rue des Petites Écuries, 75010 Paris",
-				"lat":48.8737815,
-				"long":2.3501649,
-				"ratings":[
-					{
-						"stars":4,
-						"comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
-					},
-					{
-						"stars":5,
-						"comment":"Tout simplement mon restaurant préféré !"
-					}
-				]
-				},
-				{
-				"restaurantName":"Babalou",
-				"address":"4 Rue Lamarck, 75018 Paris",
-				"lat":48.8865035,
-				"long":2.3442197,
-				"ratings":[
-					{
-						"stars":5,
-						"comment":"Une minuscule pizzeria délicieuse cachée juste à côté du Sacré choeur !"
-					},
-					{
-						"stars":3,
-						"comment":"J'ai trouvé ça correct, sans plus"
-					}
-				]
-				},
-				{
-				"restaurantName":"HTD Burgers",
-				"address":"52 rue Antoine Masson",
-				"lat":50.8865915,
-				"long":3.3442037,
-				"ratings":[
-					{
-						"stars":5,
-						"comment":"Un bon burger"
-					},
-					{
-						"stars":5,
-						"comment":"Au top"
-					}
-				]
-				}
-			]
+			restaurants: restaurants,
+			ratings: []
 		}
 	},
 
@@ -88,6 +62,18 @@ export default {
 			}); 
 			this.restaurants[i].average = m/n
 		}
+
+		/**
+		 * Push les commentaires des utilisateurs dans la data "ratings"
+		 */
+		for (let i = 0; i < this.restaurants.length; i++) {
+			this.ratings.push([])
+
+			for (let j = 0; j < this.restaurants[i].ratings.length; j++) {
+				this.ratings[i].push(this.restaurants[i].ratings[j].comment)
+			}
+		}
+		
 	},
 	mounted() {
 		const imgs = document.querySelectorAll('.img-restau')
@@ -132,13 +118,7 @@ export default {
 				link.nextElementSibling.style.transform = "rotate(0deg)";
 			});
 		});
-
-		/**
-		 * padding:5px;
-    		transform: rotate(5deg);
-		 */
 	}
-
 }
 
 </script>

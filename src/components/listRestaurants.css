@@ -4,7 +4,7 @@ section#restaurants{
     min-width: 650px;
     background-color: coral;
     padding-top: 20px;
-    
+    overflow: scroll;
 }
 
 .restau{
