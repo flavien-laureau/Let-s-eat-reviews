@@ -29,7 +29,6 @@
 					</div>
 				</div>
 			</div>
-			
 	</section>
 </template>
 
@@ -73,7 +72,7 @@ export default {
 				this.ratings[i].push(this.restaurants[i].ratings[j].comment)
 			}
 		}
-		
+
 	},
 	mounted() {
 		const imgs = document.querySelectorAll('.img-restau')
