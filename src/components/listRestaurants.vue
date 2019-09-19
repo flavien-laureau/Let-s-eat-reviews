@@ -33,14 +33,13 @@
 </template>
 
 <script>
-import restaurants from './restaurants.json';
-import store from '../utils/RestauStore';
+import store from '../utils/restauStore';
+import styleList from '../utils/styleList';
 
 export default {
 	store : store,
 	data() {
 		return {
-			restaurants: restaurants,
 			ratings: []
 		}
 	},
@@ -49,8 +48,8 @@ export default {
 		/**
 		 * Parcours le json
 		 */
-		for (let i = 0; i < this.restaurants.length; i++) {
-			const ratings = this.restaurants[i].ratings;
+		for (let i = 0; i < store.state.restaurants.length; i++) {
+			const ratings = store.state.restaurants[i].ratings;
 			/**
 			 * Calcul de la moyenne des notes pour chaque restaurant et 
 			 * ajoute la clé "average" qui contient cette moyenne
@@ -61,74 +60,36 @@ export default {
 				m = m + rating.stars
 				n++
 			}); 
-			this.restaurants[i].average = m/n
+			store.state.restaurants[i].average = m/n
 		}
 
 		/**
 		 * Push les commentaires des utilisateurs dans la data "ratings"
 		 */
-		for (let i = 0; i < this.restaurants.length; i++) {
+		for (let i = 0; i < store.state.restaurants.length; i++) {
 			this.ratings.push([])
 
-			for (let j = 0; j < this.restaurants[i].ratings.length; j++) {
-				this.ratings[i].push(this.restaurants[i].ratings[j])
+			for (let j = 0; j < store.state.restaurants[i].ratings.length; j++) {
+				this.ratings[i].push(store.state.restaurants[i].ratings[j])
 			}
 		}
 	},
 	mounted() {
-		const imgs = document.querySelectorAll('.img-restau')
-		const imgsWrapper = document.querySelectorAll('.img-wrapper')
-		const links = document.querySelectorAll('.more')
-		
-		imgs.forEach(img => {
-			img.addEventListener('mouseover', function() {
-				img.parentElement.previousElementSibling.style.opacity = "1";
-				img.style.width = "160px";
-			});
-			img.addEventListener('mouseout', function() {
-				img.parentElement.previousElementSibling.style.opacity = "0";
-				img.style.width = "150px";
-			});
-		});
-
-		imgsWrapper.forEach(wrapper => {
-			wrapper.addEventListener('mouseover', function() {
-				wrapper.style.padding = "5px";
-				wrapper.style.transform = "rotate(5deg)";
-			});
-			wrapper.addEventListener('mouseout', function() {
-				wrapper.style.padding = "10px";
-				wrapper.style.transform = "rotate(0deg)";
-				
-			});
-		});
-
-		links.forEach(link => {
-			link.addEventListener('mouseover', function() {
-				link.style.opacity = "1";
-				link.nextElementSibling.firstChild.style.width = "160px";
-				link.nextElementSibling.style.padding = "5px";
-				link.nextElementSibling.style.transform = "rotate(5deg)";
-
-			});
-			link.addEventListener('mouseout', function() {
-				link.style.opacity = "0";
-				link.nextElementSibling.firstChild.style.width = "150px";
-				link.nextElementSibling.style.padding = "10px";
-				link.nextElementSibling.style.transform = "rotate(0deg)";
-			});
-		});
+		styleList()
+	},
+	updated() {
+		styleList()
 	},
 	computed: {
 		filterRestau() {
-			return this.restaurants.filter(restau => restau.average >= store.state.filterMin && restau.average <= store.state.filterMax)
+			return store.state.restaurants
 		}
-	}
+	} 
 }
 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style src='./listRestaurants.css'>
+<style src='../utils/listRestaurants.css'>
 
 </style>

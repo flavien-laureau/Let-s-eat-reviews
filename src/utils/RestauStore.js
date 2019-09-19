@@ -1,24 +1,16 @@
 import Vue from 'vue'
-import Vuex from 'vuex'/* 
-import restaurants from '../components/restaurants.json' */
+import Vuex from 'vuex'
+import restaurants from './restaurants.json'
 
 Vue.use(Vuex)
 
-const state = {/* 
-    restaurants: restaurants, */
-    filterMin: 0,
-	filterMax: 5
+const state = {
+    restaurants: restaurants
 }
 
 const mutations = {
-    /* FILTER: (state, restaurants) => {
+    FILTER: (state, restaurants) => {
         state.restaurants = restaurants
-    }, */
-    CHANGE_MIN: (state, value) => {
-        state.filterMin = value
-    },
-    CHANGE_MAX: (state, value) => {
-        state.filterMax = value
     }
 }
 
