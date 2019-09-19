@@ -5,12 +5,12 @@
 
 <script>
 import gmapsInit from '../utils/gmaps';
-import restaurants from './restaurants.json'
+import store from '../utils/restauStore';
 
 export default {
+	store: store,
 	data() {
 		return{
-			restaurants: restaurants
 		}
 	},
 	async mounted() {
@@ -18,9 +18,9 @@ export default {
 			const google = await gmapsInit();
 			const geocoder = new google.maps.Geocoder();
 			const map = new google.maps.Map(this.$el);
-			for (let i = 0; i < this.restaurants.length; i++) {
-				const lat = this.restaurants[i].lat
-				const lng = this.restaurants[i].lng
+			for (let i = 0; i < store.state.restaurants.length; i++) {
+				const lat = store.state.restaurants[i].lat
+				const lng = store.state.restaurants[i].lng
 				const position = {lat: lat, lng: lng}
 				const marker = new google.maps.Marker({position: position, map: map});		
 			}
@@ -36,7 +36,7 @@ export default {
 		} catch (error) {
 			console.error(error);
 		}
-	},
+	}
 };
 </script>
 

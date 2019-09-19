@@ -3,14 +3,14 @@
 		<h1>Let's Eat Reviews</h1>
 		<form>
 			<label>Affiner la recherche :</label>
-			<select @change="changeMin(keyMin)" v-model='keyMin' class="custom-select custom-select-sm select">
+			<select v-model='keyMin' class="custom-select custom-select-sm select">
 				<option value="0">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
 			</select>
-			<select @change="changeMax(keyMax)" v-model='keyMax' class="custom-select custom-select-sm select">
+			<select v-model='keyMax' class="custom-select custom-select-sm select">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -23,26 +23,20 @@
 </template>
 
 <script>
-import store from '../utils/RestauStore';
+import store from '../utils/restauStore';
 
 export default {
 	store : store,
 	data() {
 		return {
+			restaurants: store.state.restaurants,
 			keyMin: "0",
 			keyMax: "5"
 		}
 	},
 	methods: {
-		changeMin(value) {
-			this.keyMin = value
-		},
-		changeMax(value) {
-			this.keyMax = value
-		},
 		search(){
-			store.commit('CHANGE_MIN', this.keyMin)
-			store.commit('CHANGE_MAX', this.keyMax)
+			store.commit('FILTER', this.restaurants.filter(restau => restau.average >= this.keyMin && restau.average <= this.keyMax))
 		}
 	}
 }

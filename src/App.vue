@@ -18,6 +18,9 @@ export default {
 		ListRestaurants,/* 
 		GoogleMap, */
 		HeaderApp
+	},
+	updated() {
+		
 	}
 }
 </script>
