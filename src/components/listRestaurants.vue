@@ -1,6 +1,6 @@
 <template>
 	<section id="restaurants">
-			<div v-for="restau in restaurants" :key="restau.id" class="restau">
+			<div v-for="restau in filterRestau" :key="restau.id" class="restau">
 				<a class="more" data-toggle="modal" :data-target="`#modal` + restau.id" >Voir les avis</a>
 				<div class="img-wrapper" data-toggle="modal" :data-target="`#modal` + restau.id"><img class='img-restau' src="https://picsum.photos/150/150"/></div>
 				<h2 class="name">{{ restau.restaurantName }}</h2>
@@ -19,7 +19,7 @@
 								</button>
 							</div>
 						<div class="modal-body" v-for="rating in ratings[restau.id-1]">
-							{{ rating }}
+							<p>{{ rating.stars }}/5 &#10132; {{ rating.comment }}</p>
 						</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -34,8 +34,10 @@
 
 <script>
 import restaurants from './restaurants.json';
+import store from '../utils/RestauStore';
 
 export default {
+	store : store,
 	data() {
 		return {
 			restaurants: restaurants,
@@ -69,10 +71,9 @@ export default {
 			this.ratings.push([])
 
 			for (let j = 0; j < this.restaurants[i].ratings.length; j++) {
-				this.ratings[i].push(this.restaurants[i].ratings[j].comment)
+				this.ratings[i].push(this.restaurants[i].ratings[j])
 			}
 		}
-
 	},
 	mounted() {
 		const imgs = document.querySelectorAll('.img-restau')
@@ -117,6 +118,11 @@ export default {
 				link.nextElementSibling.style.transform = "rotate(0deg)";
 			});
 		});
+	},
+	computed: {
+		filterRestau() {
+			return this.restaurants.filter(restau => restau.average >= store.state.filterMin && restau.average <= store.state.filterMax)
+		}
 	}
 }
 

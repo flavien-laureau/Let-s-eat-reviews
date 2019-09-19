@@ -5,26 +5,25 @@
 
 <script>
 import gmapsInit from '../utils/gmaps';
-import restaurants from './restaurants.json';
+import restaurants from './restaurants.json'
 
 export default {
-	/* data() {
-		return {
+	data() {
+		return{
 			restaurants: restaurants
 		}
-	}, */
+	},
 	async mounted() {
 		try {
 			const google = await gmapsInit();
 			const geocoder = new google.maps.Geocoder();
 			const map = new google.maps.Map(this.$el);
-			for (let i = 0; i < restaurants.length; i++) {
-				const lat = restaurants[i].lat
-				const lng = restaurants[i].lng
+			for (let i = 0; i < this.restaurants.length; i++) {
+				const lat = this.restaurants[i].lat
+				const lng = this.restaurants[i].lng
 				const position = {lat: lat, lng: lng}
 				const marker = new google.maps.Marker({position: position, map: map});		
 			}
-			
 
 			geocoder.geocode({ address: '52 rue antoine masson, 21130 auxonne' }, (results, status) => {
 				if (status !== 'OK' || !results[0]) {

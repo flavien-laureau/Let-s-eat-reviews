@@ -3,27 +3,48 @@
 		<h1>Let's Eat Reviews</h1>
 		<form>
 			<label>Affiner la recherche :</label>
-			<select class="custom-select custom-select-sm select">
+			<select @change="changeMin(keyMin)" v-model='keyMin' class="custom-select custom-select-sm select">
 				<option value="0">0</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
 			</select>
-			<select class="custom-select custom-select-sm select">
+			<select @change="changeMax(keyMax)" v-model='keyMax' class="custom-select custom-select-sm select">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
-				<option value="5" selected>5</option>
+				<option value="5">5</option>
 			</select>
-			<button class="btn">Rechercher</button>
+			<button @click.prevent='search' class="btn">Rechercher</button>
 		</form>
 	</header>
 </template>
 
 <script>
+import store from '../utils/RestauStore';
+
 export default {
+	store : store,
+	data() {
+		return {
+			keyMin: "0",
+			keyMax: "5"
+		}
+	},
+	methods: {
+		changeMin(value) {
+			this.keyMin = value
+		},
+		changeMax(value) {
+			this.keyMax = value
+		},
+		search(){
+			store.commit('CHANGE_MIN', this.keyMin)
+			store.commit('CHANGE_MAX', this.keyMax)
+		}
+	}
 }
 </script>
 
