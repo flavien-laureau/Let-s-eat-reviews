@@ -11,6 +11,9 @@ const state = {
 const mutations = {
     FILTER: (state, restaurants) => {
         state.restaurants = restaurants
+    },
+    MAP: (state, map) => {
+        state.map = map
     }
 }
 
@@ -18,6 +21,5 @@ export default new Vuex.Store({
     state: state,
     mutations: mutations,
     getters: {},
-    actions: {},
-    strict: true
+    actions: {}
 })

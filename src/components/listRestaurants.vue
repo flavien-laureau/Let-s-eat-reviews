@@ -1,34 +1,42 @@
 <template>
 	<section id="restaurants">
-			<div v-for="restau in filterRestau" :key="restau.id" class="restau">
-				<a class="more" data-toggle="modal" :data-target="`#modal` + restau.id" >Voir les avis</a>
-				<div class="img-wrapper" data-toggle="modal" :data-target="`#modal` + restau.id"><img class='img-restau' src="https://picsum.photos/150/150"/></div>
-				<h2 class="name">{{ restau.restaurantName }}</h2>
-				<hr class="hr">
-				<p class="address">{{ restau.address }}</p>
-				<p class="rating">{{ restau.average }}/5</p>
-				
-				<!-- Modal -->
-				<div class="modal fade" :id="`modal` + restau.id" tabindex="-1" role="dialog" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-scrollable" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h3 class="modal-title">{{ restau.restaurantName }}</h3>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						<div class="modal-body" v-for="rating in ratings[restau.id-1]">
-							<p>{{ rating.stars }}/5 &#10132; {{ rating.comment }}</p>
+		<div v-for="(restau, index) in filterRestau" :key="index" class="restau">
+			<a class="more" data-toggle="modal" :data-target="`#listAvis` + index">Voir les avis</a>
+			<div class="img-wrapper" data-toggle="modal" :data-target="`#listAvis` + index"><img class='img-restau' src="https://picsum.photos/150/150"/></div>
+			<h2 class="name">{{ restau.restaurantName }}</h2>
+			<hr class="hr">
+			<p class="address">{{ restau.address }}</p>
+			<p class="rating">{{ restau.average }}/5</p>
+			
+			<!-- Modal -->
+			<div class="modal fade" :id="`listAvis` + index" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3 class="modal-title">{{ restau.restaurantName }}</h3>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" @click.prevent="toggleReview(1)">
+							<span aria-hidden="true">&times;</span>
+							</button>
 						</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
+						<div class="modal-body">
+							<div v-for="rating in ratings[index]">
+								<p v-show="viewReview">{{ rating.stars }}/5 &#10132; {{ rating.comment }}</p>
 							</div>
+							<form v-show="viewForm">
+								<p>Pour ajouter un avis, remplisser le formulaire ci-dessous:</p>
+								<label for="rate">Note :</label><input v-model="rate" name="rate" id="rate" type="text"><br>
+								<label for="comment">Commentaire :</label><br><textarea v-model="comment" id="comment" name="comment" cols="50" rows="5"></textarea>
+								<button type="button" class="button btnPrimary" @click.prevent="sendReview">Envoyer</button>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="button btnSecondary" data-dismiss="modal" @click.prevent="toggleReview(1)">Fermer</button>
+							<button type="button" class="button btnPrimary" @click.prevent="toggleReview">{{ btnReview }}</button>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 </template>
 
@@ -40,7 +48,12 @@ export default {
 	store : store,
 	data() {
 		return {
-			ratings: []
+			ratings: [],
+			viewReview: true,
+			viewForm: false,
+			btnReview: "Ajouter un avis",
+			comment: "",
+			rate: ""
 		}
 	},
 
@@ -84,7 +97,27 @@ export default {
 		filterRestau() {
 			return store.state.restaurants
 		}
-	} 
+	},
+	methods: {
+		toggleReview(close) {
+			if(this.btnReview === "Voir les avis" || close === 1){
+				this.btnReview = "Ajouter un avis"
+				this.viewReview = true
+				this.viewForm = false
+			}else if(this.btnReview === "Ajouter un avis"){
+				this.btnReview = "Voir les avis"
+				this.viewReview = false
+				this.viewForm = true			
+			}
+		},
+		sendReview() {
+			console.log(this.comment, this.rate)
+			this.comment = ""
+			this.rate = ""
+			console.log(this.comment, this.rate)
+
+		}
+	}
 }
 
 </script>

@@ -6,6 +6,8 @@
 <script>
 import gmapsInit from '../utils/gmaps';
 import store from '../utils/restauStore';
+import addRestau from '../utils/addRestau'
+import refresh from '../utils/refresh'
 
 export default {
 	store: store,
@@ -18,12 +20,15 @@ export default {
 			const google = await gmapsInit();
 			const geocoder = new google.maps.Geocoder();
 			const map = new google.maps.Map(this.$el);
-			for (let i = 0; i < store.state.restaurants.length; i++) {
+			store.commit('MAP', map)
+			addRestau()
+			refresh()
+			/* for (let i = 0; i < store.state.restaurants.length; i++) {
 				const lat = store.state.restaurants[i].lat
 				const lng = store.state.restaurants[i].lng
 				const position = {lat: lat, lng: lng}
 				const marker = new google.maps.Marker({position: position, map: map});		
-			}
+			} */
 
 			geocoder.geocode({ address: '52 rue antoine masson, 21130 auxonne' }, (results, status) => {
 				if (status !== 'OK' || !results[0]) {
@@ -36,6 +41,7 @@ export default {
 		} catch (error) {
 			console.error(error);
 		}
+		
 	}
 };
 </script>

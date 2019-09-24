@@ -1,6 +1,5 @@
 [
    {
-      "id": 1,
       "restaurantName":"Le Corbeau",
       "address":"1 Rue de Berbis, 21130 Auxonne",
       "lat":47.1942971,
@@ -17,7 +16,6 @@
       ]
    },
    {
-      "id": 2,
       "restaurantName":"L'Aquarium",
       "address":"41 Boulevard Pasteur, 21130 Auxonne",
       "lat":47.1919,
@@ -34,7 +32,6 @@
       ]
    },
    {
-      "id": 3,
       "restaurantName":"HTD Burgers",
       "address":"52 rue Antoine Masson, 21130 Auxonne",
       "lat":47.1933011,
@@ -51,7 +48,6 @@
       ]
    },
    {
-      "id": 4,
       "restaurantName":"Hôtel Chateau Mont Joly",
       "address":"6 Rue Mont Joly, 39100 Sampans",
       "lat":47.1236,
@@ -68,7 +64,6 @@
       ]
    },
    {
-      "id": 5,
       "restaurantName":"Les Saveurs d'Asie",
       "address":"64 rue Antoine Masson, 21130 Auxonne",
       "lat":47.1930747,
@@ -85,7 +80,6 @@
       ]
    },
    {
-      "id": 6,
       "restaurantName":"Restaurant De La Gare",
       "address":"6 rue de la Galere, 21130, Tillenay",
       "lat":47.193167,

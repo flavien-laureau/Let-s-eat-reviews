@@ -74,3 +74,38 @@ section#restaurants{
     font-family: "Pacifico";
     text-shadow: 0 1px 1px #222;
 }
+
+/* Modal */
+#rate{
+    margin-left: 10px;
+}
+
+#comment{
+    width: 100%;
+}
+
+.button{
+    color: white;
+    font-size: 1.05em;
+	margin: auto 15px;
+	height: 50%;
+    border-radius: 5px; 
+}
+
+.btnPrimary{
+    background-color: #428bca;
+    border: 2px solid #0088ff;
+}
+
+.btnPrimary:hover{
+    background-color: #317ab9;
+}
+
+.btnSecondary{
+    background-color: #6c757e;
+    border: 2px solid #616161;
+}
+
+.btnSecondary:hover{
+    background-color: #606060;
+}

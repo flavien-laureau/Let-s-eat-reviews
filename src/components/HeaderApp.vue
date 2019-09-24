@@ -17,13 +17,14 @@
 				<option value="4">4</option>
 				<option value="5">5</option>
 			</select>
-			<button @click.prevent='search' class="btn">Rechercher</button>
+			<button @click.prevent='search' class="btnPrimary">Rechercher</button>
 		</form>
 	</header>
 </template>
 
 <script>
 import store from '../utils/restauStore';
+import refresh from '../utils/refresh';
 
 export default {
 	store : store,
@@ -37,6 +38,7 @@ export default {
 	methods: {
 		search(){
 			store.commit('FILTER', this.restaurants.filter(restau => restau.average >= this.keyMin && restau.average <= this.keyMax))
+			refresh()
 		}
 	}
 }
@@ -77,7 +79,7 @@ label{
 	margin: auto 15px;
 }
 
-.btn{
+.btnPrimary{
 	color: white;
     background-color: #428bca;
 	margin: auto 15px;
@@ -86,7 +88,7 @@ label{
     
 }
 
-.btn:hover{
+.btnPrimary:hover{
     background-color: #317ab9;
 }
 </style>
