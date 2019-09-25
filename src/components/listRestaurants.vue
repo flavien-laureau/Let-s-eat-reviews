@@ -19,14 +19,27 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<div v-for="rating in ratings[index]">
+							<div v-for="(rating, i) in ratings[index]" :key="i">
 								<p v-show="viewReview">{{ rating.stars }}/5 &#10132; {{ rating.comment }}</p>
 							</div>
 							<form v-show="viewForm">
 								<p>Pour ajouter un avis, remplisser le formulaire ci-dessous:</p>
 								<label for="rate">Note :</label><input v-model="rate" name="rate" id="rate" type="text"><br>
-								<label for="comment">Commentaire :</label><br><textarea v-model="comment" id="comment" name="comment" cols="50" rows="5"></textarea>
-								<button type="button" class="button btnPrimary" @click.prevent="sendReview">Envoyer</button>
+								<label for="comment">Commentaire :</label><br>
+								<textarea 
+									v-model="comment" 
+									id="comment" 
+									name="comment" 
+									cols="50" 
+									rows="5"
+									@keypress.enter.prevent="sendReview(index)">
+								</textarea>
+								<button :id="`btn` + index" 
+										type="button" 
+										class="button btnPrimary"  
+										@click.prevent="sendReview(index)">
+										Envoyer
+								</button>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -43,6 +56,7 @@
 <script>
 import store from '../utils/restauStore';
 import styleList from '../utils/styleList';
+import displayReviews from '../utils/displayReviews';
 
 export default {
 	store : store,
@@ -75,20 +89,15 @@ export default {
 			}); 
 			store.state.restaurants[i].average = m/n
 		}
-
-		/**
-		 * Push les commentaires des utilisateurs dans la data "ratings"
-		 */
-		for (let i = 0; i < store.state.restaurants.length; i++) {
-			this.ratings.push([])
-
-			for (let j = 0; j < store.state.restaurants[i].ratings.length; j++) {
-				this.ratings[i].push(store.state.restaurants[i].ratings[j])
-			}
-		}
+		
+		this.ratings = displayReviews()
+		
 	},
 	mounted() {
 		styleList()
+	},
+	beforeUpdate() {
+		this.ratings = displayReviews()
 	},
 	updated() {
 		styleList()
@@ -110,13 +119,17 @@ export default {
 				this.viewForm = true			
 			}
 		},
-		sendReview() {
-			console.log(this.comment, this.rate)
+		sendReview(index) {
+			const review = {
+				index: index,
+				comment: this.comment,
+				rate: this.rate
+			}
+			this.ratings[index].push(review)
+			store.commit('ADD_REVIEW', review)
 			this.comment = ""
 			this.rate = ""
-			console.log(this.comment, this.rate)
-
-		}
+		}	
 	}
 }
 

@@ -12,7 +12,7 @@ function addMarker(location) {
 export default function addRestau(){
     
     store.state.map.addListener('click', function(e) {
-        addMarker(e.latLng);$
+        addMarker(e.latLng);
         store.state.restaurants.push({
             "id": store.state.restaurants.length + 1,
             "restaurantName":"Nouveau restau",

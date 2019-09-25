@@ -18,6 +18,7 @@
 				<option value="5">5</option>
 			</select>
 			<button @click.prevent='search' class="btnPrimary">Rechercher</button>
+			<button @click.prevent='clg' class="btnPrimary">console.log</button>
 		</form>
 	</header>
 </template>
@@ -25,6 +26,8 @@
 <script>
 import store from '../utils/restauStore';
 import refresh from '../utils/refresh';
+import displayReviews from '../utils/displayReviews';
+
 
 export default {
 	store : store,
@@ -39,6 +42,10 @@ export default {
 		search(){
 			store.commit('FILTER', this.restaurants.filter(restau => restau.average >= this.keyMin && restau.average <= this.keyMax))
 			refresh()
+			displayReviews()
+		},
+		clg() {
+			console.log(store.state.restaurants)
 		}
 	}
 }
