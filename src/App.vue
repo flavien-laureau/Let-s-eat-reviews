@@ -12,18 +12,12 @@
 import GoogleMap from './components/GoogleMap'
 import ListRestaurants from './components/ListRestaurants.vue'
 import HeaderApp from './components/HeaderApp.vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
 	components: {
 		ListRestaurants,
 		GoogleMap,
 		HeaderApp
-	},
-	updated() {
-		
 	}
 }
 </script>

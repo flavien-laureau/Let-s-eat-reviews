@@ -1,13 +1,15 @@
 <template>
-	<div class="map">
-	</div>
+	<section>
+		<div class="map">
+		</div>
+	</section>
 </template>
 
 <script>
 import gmapsInit from '../utils/gmaps';
 import store from '../utils/restauStore';
-import addRestau from '../utils/addRestau'
-import refresh from '../utils/refresh'
+import addRestau from '../utils/addRestau';
+import refresh from '../utils/refresh';
 
 export default {
 	store: store,
@@ -41,7 +43,6 @@ export default {
 		} catch (error) {
 			console.error(error);
 		}
-		
 	}
 };
 </script>
