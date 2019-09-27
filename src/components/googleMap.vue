@@ -27,8 +27,8 @@
 
 			<template v-slot:modal-footer>
 				<div class="w-100">
-					<button type="button" class="button btnSecondary float-right" @click="$bvModal.hide('bv-modal')">Annuler</button>
-					<button type="button" class="button btnPrimary float-right">Ajouter</button>
+					<button type="button" class="button btnSecondary float-right" @click.prevent="$bvModal.hide('bv-modal'); cancel()">Annuler</button>
+					<button type="button" class="button btnPrimary float-right" @click.prevent="$bvModal.hide('bv-modal'); addRestau()">Ajouter</button>
 				</div>
 			</template>
 		</b-modal>
@@ -38,13 +38,14 @@
 <script>
 import gmapsInit from '../utils/gmaps';
 import store from '../utils/restauStore';
-import addRestau from '../utils/addRestau';
 import refresh from '../utils/refresh';
+import markers from '../utils/markers'
 
 export default {
 	store: store,
 	data() {
 		return{
+			location: "",
 			name: "",
 			address: ""
 		}
@@ -54,21 +55,18 @@ export default {
 			const google = await gmapsInit();
 			const geocoder = new google.maps.Geocoder();
 			const map = new google.maps.Map(this.$el);
-			store.commit('MAP', map)
-			addRestau()
+			store.commit('MAP', map) //Envoie l'instance de la carte dans le store
 			refresh()
-			/* for (let i = 0; i < store.state.restaurants.length; i++) {
-				const lat = store.state.restaurants[i].lat
-				const lng = store.state.restaurants[i].lng
-				const position = {lat: lat, lng: lng}
-				const marker = new google.maps.Marker({position: position, map: map});		
-			} */
+
+			const t = this
+			store.state.map.addListener('click', function(e) {
+				t.location = e.latLng
+			});
 
 			geocoder.geocode({ address: '52 rue antoine masson, 21130 auxonne' }, (results, status) => {
 				if (status !== 'OK' || !results[0]) {
 					throw new Error(status);
 				}
-
 				map.setCenter(results[0].geometry.location);
 				map.fitBounds(results[0].geometry.viewport);
 			});
@@ -76,7 +74,34 @@ export default {
 			console.error(error);
 		}
 	},
+
 	methods: {
+		addRestau() {
+			this.addMarker(this.location);
+			store.state.restaurants.push({
+					"restaurantName": this.name,
+      				"address": this.address,
+					"lat":this.location.lat,
+					"lng":this.location.lng,
+					"ratings":[
+					]
+				})
+			this.location = ""
+			this.name = ""
+			this.address = ""
+		},
+		addMarker(location) {				
+			const marker = new google.maps.Marker({
+				position: location,
+				map: store.state.map
+			});
+			markers.table.push(marker);
+		},
+		cancel() {
+			this.location = ""
+			this.name = ""
+			this.address = ""
+		}
 	}
 };
 </script>
