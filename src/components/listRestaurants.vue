@@ -15,16 +15,27 @@
 					</div>
 					<form v-show="viewForm">
 						<p>Pour ajouter un avis, remplisser le formulaire ci-dessous:</p>
-						<label for="rate">Note :</label><input v-model="rate" name="rate" id="rate" type="text"><br>
-						<label for="comment">Commentaire :</label><br>
-						<textarea 
-							v-model="comment" 
-							id="comment" 
-							name="comment" 
-							cols="50" 
-							rows="5"
-							@keypress.enter.prevent="sendReview(index)">
-						</textarea>
+						<label for="rate" class="inp">
+							<input class="styleInput" v-model="rate" name="rate" id="rate" type="text" placeholder=" ">
+							<span class="label">Note :</span>
+							<span class="border"></span>
+						</label>
+						<hr>
+						<label for="comment" class="inp labelTextarea">
+							<textarea 
+								v-model="comment" 
+								id="comment" 
+								class="styleInput textarea"
+								name="comment" 
+								cols="50" 
+								rows="5"
+								placeholder=" "
+								@keypress.enter.prevent="sendReview(index)">
+							</textarea>
+							<span class="label">Commentaire :</span>
+							<span class="border"></span>
+						</label>
+						<br>
 						<button :id="`btn` + index" 
 								type="button" 
 								class="button btnPrimary"  
@@ -172,6 +183,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style src='../utils/listRestaurants.css'>
+
+<style src='../utils/style.css' scoped>
 
 </style>

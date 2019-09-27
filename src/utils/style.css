@@ -1,0 +1,240 @@
+/*
+    Global
+*/
+.inp{
+	position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px;
+}
+.labelTextarea{
+    max-width: 100%;
+}
+  
+.label{
+	position: absolute;
+    top: 16px;
+    left: 0;
+    font-size: 16px;
+    color: #9098A9;
+    font-weight: 500;
+    transform-origin: 0 0;
+    transition: all .2s ease;
+}
+    
+.border{
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #0077FF;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all .15s ease;
+}
+    
+.styleInput{
+	-webkit-appearance: none;
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    padding: 12px 0;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid #C8CCD4;
+    background: none;
+    border-radius: 0;
+    color: #223254;
+    transition: all .15s ease;
+}
+.styleInput:hover{
+    background: rgba(#223254,.03);
+}
+.styleInput:not(:placeholder-shown) + span{
+	color: #5A667F;
+    transform: translateY(-26px) scale(.75);
+}
+.styleInput:focus{
+	background: none;
+    outline: none;
+} 
+.styleInput:focus + span{
+	color: #0077FF;
+	transform: translateY(-26px) scale(.75);
+}
+.styleInput:focus + span + .border {
+	transform: scaleX(1);
+}
+
+.textarea{
+    height: 100px;
+}
+
+
+.button{
+    color: white;
+    font-size: 1.05em;
+	margin: auto 15px;
+	height: 50%;
+    border-radius: 5px; 
+}
+
+.btnPrimary{
+    background-color: #428bca;
+    border: 2px solid #0088ff;
+}
+
+.btnPrimary:hover{
+    background-color: #317ab9;
+}
+
+.btnSecondary{
+    background-color: #6c757e;
+    border: 2px solid #616161;
+}
+
+.btnSecondary:hover{
+    background-color: #606060;
+}
+
+/*
+    GoogleMap
+*/
+.map {
+	width: 100vw;
+	height: 100%;
+}
+
+#left{
+	display: grid;
+	font-family: Avenir;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+}
+    
+
+/*
+    ListRestaurants
+*/
+section#restaurants{
+    height: 100%;
+    min-width: 650px;
+    background-color: #FAFAFA;
+    padding-top: 20px;
+    overflow: scroll;
+}
+
+.restau{
+    transition: all .4s;
+    position:relative;
+    padding-left:220px;
+    padding-right: 75px;
+    height: 150px;
+    margin-bottom: 30px;
+    background-color: #e96b55;
+    border-radius: 150px;
+    cursor:pointer;
+}
+
+.img-wrapper{
+    position: absolute;
+    top: -6px;
+    left: -10px;
+    border-radius: 100px;
+    background-color: #FAFAFA;
+    padding: 10px;
+    z-index: 1000;
+    transition: all .2s;
+}
+.img-restau{
+    border-radius: 100px;
+    transition: all .2s;
+    width: 150px;
+}
+
+.name{
+    height: 37px;
+    line-height: 47px;
+    font-size: 24px;
+    color: #333;
+    transition: all .4s;
+    margin-bottom: 15px;
+}
+
+.hr{
+    border: 1px solid #FAFAFA;
+    padding-left:220px;
+    padding-right: 75px;
+}
+
+.address, .rating{
+    color: #FAFAFA;
+}
+
+.more{
+    position:absolute;
+    display:block;
+    top: 0;
+    left: 0;
+    height: 100%;
+    line-height: 150px;
+    text-align: center;
+    width: 100%;
+    background-color: #e96b55;
+    font-size: 48px;
+    font-style:italic;
+    opacity:0;
+    color: #333 !important;
+    transition: all .4s;
+    text-decoration: none !important;
+    border-radius: 150px;
+    font-family: "Pacifico";
+    text-shadow: 0 1px 1px #222;
+}
+
+
+#comment{
+    width: 100%;
+}
+
+
+/*
+    Header
+*/
+
+
+#header {
+	height: 80px;
+	max-height: 80px;
+    background-color: #333;
+    white-space:nowrap;
+}
+
+#h1{
+	color: #FAFAFA;
+	margin: auto 0;
+	width: 50%;
+	text-align: center;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+#form-header{
+	display: flex;
+	width: 50%;
+    justify-content: center;
+}
+
+#label-header{
+	color: #FAFAFA;
+	margin: auto 15px;
+	font-size: 1.1em;
+}
+
+.select{
+	width: 50px;
+	height: 50%;
+	margin: auto 15px;
+}
+

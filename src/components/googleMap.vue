@@ -1,7 +1,37 @@
 <template>
-	<section>
+	<section id="left" @click="$bvModal.show('bv-modal')">
 		<div class="map">
 		</div>
+
+		<b-modal id="bv-modal">
+			<template v-slot:modal-title>
+			Ajout d'un nouveau restaurant
+			</template>
+
+			<div class="d-block text-center">
+				<form>
+					<label for="name" class="inp">
+						<input class="styleInput" v-model="name" name="name" id="name" type="text" placeholder=" ">
+						<span class="label">Nom de l'établissement</span>
+						<span class="border"></span>
+					</label>
+					<hr>
+					<label for="address" class="inp">
+						<input class="styleInput" v-model="address" name="address" id="address" type="text" placeholder=" ">
+						<span class="label">Adresse</span>
+						<span class="border"></span>
+					</label>
+					
+				</form>
+			</div>
+
+			<template v-slot:modal-footer>
+				<div class="w-100">
+					<button type="button" class="button btnSecondary float-right" @click="$bvModal.hide('bv-modal')">Annuler</button>
+					<button type="button" class="button btnPrimary float-right">Ajouter</button>
+				</div>
+			</template>
+		</b-modal>
 	</section>
 </template>
 
@@ -15,6 +45,8 @@ export default {
 	store: store,
 	data() {
 		return{
+			name: "",
+			address: ""
 		}
 	},
 	async mounted() {
@@ -43,19 +75,12 @@ export default {
 		} catch (error) {
 			console.error(error);
 		}
+	},
+	methods: {
 	}
 };
 </script>
 
-<style>
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
+<style src="../utils/style.css" scoped>
 
-.map {
-	width: 100vw;
-	height: 100%;
-}
 </style>
