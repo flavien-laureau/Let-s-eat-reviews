@@ -1,11 +1,11 @@
 <template>
-	<section id="left" @click="$bvModal.show('bv-modal')">
+	<section @click="showModal" id="left">
 		<div class="map">
 		</div>
 
-		<b-modal id="bv-modal">
+		<b-modal id="addRestauModal">
 			<template v-slot:modal-title>
-			Ajout d'un nouveau restaurant
+				Ajout d'un nouveau restaurant
 			</template>
 
 			<div class="d-block text-center">
@@ -27,8 +27,8 @@
 
 			<template v-slot:modal-footer>
 				<div class="w-100">
-					<button type="button" class="button btnSecondary float-right" @click.prevent="$bvModal.hide('bv-modal'); cancel()">Annuler</button>
-					<button type="button" class="button btnPrimary float-right" @click.prevent="$bvModal.hide('bv-modal'); addRestau()">Ajouter</button>
+					<button type="button" class="button btnSecondary float-right" @click.prevent="$bvModal.hide('addRestauModal'); cancel()">Annuler</button>
+					<button type="button" class="button btnPrimary float-right" @click.prevent="$bvModal.hide('addRestauModal'); addRestau()">Ajouter</button>
 				</div>
 			</template>
 		</b-modal>
@@ -74,15 +74,22 @@ export default {
 			console.error(error);
 		}
 	},
-
 	methods: {
+		showModal() {
+			if(store.state.addRestau === true){
+				this.$bvModal.show('addRestauModal')
+			}
+		},
 		addRestau() {
+			store.commit('ADD_RESTAU', false)
+			document.querySelector('#pAddRestau').style.display = 'none'
 			this.addMarker(this.location);
 			store.state.restaurants.push({
 					"restaurantName": this.name,
       				"address": this.address,
-					"lat":this.location.lat,
-					"lng":this.location.lng,
+					"lat":this.location.lat(),
+					"lng":this.location.lng(),
+					"average": 0,
 					"ratings":[
 					]
 				})
@@ -98,6 +105,8 @@ export default {
 			markers.table.push(marker);
 		},
 		cancel() {
+			store.commit('ADD_RESTAU', false)
+			document.querySelector('#pAddRestau').style.display = 'none'
 			this.location = ""
 			this.name = ""
 			this.address = ""

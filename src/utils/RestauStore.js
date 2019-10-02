@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const state = {
     restaurants: restaurants,
-    reviews: []
+    reviews: [],
+    addRestau: false
 }
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
             "comment": review.comment
         })
     },
+    ADD_RESTAU: (state, value) => {
+        state.addRestau = value
+    }
 }
 
 export default new Vuex.Store({
