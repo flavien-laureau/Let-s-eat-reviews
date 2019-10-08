@@ -2,21 +2,10 @@
 	<header id="header">
 		<h1 id="h1">Let's Eat Reviews</h1>
 		<div id="midHeader">
-			<button @click="showPAddRestau(true)" id="btnAddRestau" class="button btnPrimary">Ajouter un restaurant</button><!-- @click="$bvModal.show('clicMap')" -->
+			<button @click="showPAddRestau(true)" id="btnAddRestau" class="button btnPrimary">Ajouter un restaurant</button>
 			<p id="pAddRestau">Cliquer sur la carte ! <button @click="showPAddRestau(false)" class="button btnPrimary">x</button></p>
 		</div>
-		<!-- <b-modal id="clicMap">
 
-			<div class="d-block text-center">
-				Pour ajouter un restaurant, cliquer sur la carte.
-			</div>
-
-			<template v-slot:modal-footer>
-				<div class="w-100">
-					<button type="button" class="button btnSecondary float-right" @click.prevent="$bvModal.hide('clicMap')">Ok</button>
-				</div>
-			</template>
-		</b-modal> -->
 		<form id="form-header">
 			<label id="label-header">Affiner la recherche :</label>
 			<select v-model='keyMin' class="custom-select custom-select-sm select">
@@ -44,25 +33,31 @@ import store from '../utils/restauStore';
 import refresh from '../utils/refresh';
 import displayReviews from '../utils/displayReviews';
 
-
 export default {
 	store : store,
+	name: 'HeaderApp',
 	data() {
 		return {
-			restaurants: store.state.restaurants,
+			restaurants: [],
 			keyMin: "0",
 			keyMax: "5",
 			pAddRestau: store.state.pAddRestau
 		}
 	},
 	mounted() {
+		/* const t = this
+		function setTime() {
+			t.restaurants = store.state.restaurants
+		 }
+		setTimeout(setTime, 1000); */
+
 		document.querySelector('#pAddRestau').style.display = 'none'
 	},
 	methods: {
 		search(){
-			store.commit('FILTER', this.restaurants.filter(restau => restau.average >= this.keyMin && restau.average <= this.keyMax))
-			refresh()
-			displayReviews()
+			//store.commit('UPDATE_RESTAU', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax))
+			//refresh()
+			//displayReviews() 
 		},
 		clg() {
 			console.log(store.state.restaurants)

@@ -2,19 +2,19 @@
 	<section id="restaurants">
 		<div v-for="(restau, index) in filterRestau" :key="index" class="restau">
 			<a class="more" @click="$bvModal.show(`listAvis${index}`)">Voir les avis</a>
-			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' src="https://picsum.photos/150/150"/></div>
-			<h2 class="name">{{ restau.restaurantName }}</h2>
+			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' /></div>
+			<h2 class="name">{{ restau.name }}</h2>
 			<hr class="hr">
-			<p class="address">{{ restau.address }}</p>
-			<p class="rating">{{ restau.average }}/5</p>
+			<p class="address">{{ restau.vicinity }}</p>
+			<p class="rating">{{ restau.rating }}/5</p>
 
 			<!-- Modal -->
-			<b-modal :id="`listAvis` + index" :title=restau.restaurantName @hidden='hideModal'>
-					<div v-for="(rating, i) in ratings[index]" :key="i">
-						<p v-show="viewReview">{{ rating.stars }}/5 &#10132; {{ rating.comment }}</p>
+			<b-modal :id="`listAvis` + index" :title=restau.name @hidden='hideModal'>
+					<div v-for="(rating, i) in restau.reviews.reviews" :key="i">
+						<p v-show="viewReview">{{ rating.rating }}/5 &#10132; {{ rating.text }}</p>
 					</div>
 					<form v-show="viewForm">
-						<p>Pour ajouter un avis, remplisser le formulaire ci-dessous:</p>
+						<p>Pour ajouter un avis, remplissez le formulaire ci-dessous:</p>
 						<label for="rate" class="inp">
 							<input class="styleInput" v-model="rate" name="rate" id="rate" type="text" placeholder=" ">
 							<span class="label">Note</span>
@@ -61,9 +61,10 @@ import displayReviews from '../utils/displayReviews';
 
 export default {
 	store : store,
+	name: 'ListRestaurants',
 	data() {
 		return {
-			ratings: [],
+			restaurants: '',
 			viewReview: true,
 			viewForm: false,
 			btnReview: "Ajouter un avis",
@@ -73,32 +74,21 @@ export default {
 	},
 
 	created() {
-		/**
-		 * Parcours le json
-		 */
-		for (let i = 0; i < store.state.restaurants.length; i++) {
-			const ratings = store.state.restaurants[i].ratings;
-			/**
-			 * Calcul de la moyenne des notes pour chaque restaurant et 
-			 * ajoute la clé "average" qui contient cette moyenne
-			 */
-			let m = 0
-			let n = 0
-			ratings.forEach(rating => {
-				m = m + rating.stars
-				n++
-			}); 
-			store.state.restaurants[i].average = m/n
-		}
-		
-		this.ratings = displayReviews()
-		
+
 	},
 	mounted() {
+		/* const t = this
+		function setTime() {
+			t.restaurants = store.state.restaurants
+		}
+
+		setTimeout(setTime, 1000); */
+		
+		
+
 		styleList()
 	},
 	beforeUpdate() {
-		this.ratings = displayReviews()
 	},
 	updated() {
 		styleList()
@@ -126,15 +116,14 @@ export default {
 			}
 		},
 		sendReview(index) {
-			const review = {
-				index: index,
-				comment: this.comment,
-				rate: this.rate
+			/* const review = {
+				text: this.comment,
+				rating: this.rate
 			}
 			this.ratings[index].push(review)
-			store.commit('ADD_REVIEW', review)
+			//store.commit('ADD_REVIEW', review)
 			this.comment = ""
-			this.rate = ""
+			this.rate = "" */
 		}	
 	}
 }

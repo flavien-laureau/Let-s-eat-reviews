@@ -1,9 +1,9 @@
 <template>
 	<div class="container-fluid">
-		<headerApp class="row"></headerApp>
+		<HeaderApp class="row"></HeaderApp>
 		<div class="main row">
 			<GoogleMap class="col"></GoogleMap>
-			<listRestaurants class="col"></listRestaurants>
+			<ListRestaurants class="col"></ListRestaurants>
 		</div>
 	</div>
 </template>
