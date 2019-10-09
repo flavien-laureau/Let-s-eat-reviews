@@ -16,7 +16,7 @@ function setMapOnAll(map) {
     }
 }
 
-export default function refresh(){
+export default function refreshMarkers(){
 
     setMapOnAll(null);
     markers.table = []

@@ -5,7 +5,6 @@ Vue.use(Vuex)
 
 const state = {
     restaurants: '',
-    reviews: [],
     addRestau: false
 }
 
@@ -15,6 +14,12 @@ const mutations = {
     },
     MAP: (state, map) => {
         state.map = map
+    },
+    GOOGLE: (state, google) => {
+        state.google = google
+    },
+    SERVICE: (state, service) => {
+        state.service = service
     },
     SET_REVIEWS: (state, reviews) => {
         state.restaurants = reviews
@@ -30,9 +35,6 @@ const mutations = {
     }
 }
 
-const actions = {
-
-}
 
 export default new Vuex.Store({
     state: state,

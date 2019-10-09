@@ -1,8 +1,5 @@
 <template>
 	<section @click="showModal" id="left">
-		<div class="map">
-		</div>
-
 		<b-modal id="addRestauModal">
 			<template v-slot:modal-title>
 				Ajout d'un nouveau restaurant
@@ -36,9 +33,10 @@
 </template>
 
 <script>
-import gmapsInit from '../utils/gmaps';
+import mapInit from '../utils/mapInit';
 import store from '../utils/restauStore';
-import refresh from '../utils/refresh';
+import nearbySearchCallback from '../utils/nearbySearchCallback';
+import refreshMarkers from '../utils/refreshMarkers';
 import markers from '../utils/markers'
 
 export default {
@@ -91,78 +89,59 @@ export default {
 
 		navigator.geolocation.getCurrentPosition(success, error, options);
 
-		
+		 
 
 		try {
-			const google = await gmapsInit();
-			const geocoder = new google.maps.Geocoder();
-			const map = new google.maps.Map(this.$el);
-			store.commit('MAP', map) //Envoie l'instance de la carte dans le store
-			const service = new google.maps.places.PlacesService(store.state.map);
-			let position = new google.maps.LatLng(selLocLat, selLocLng);
-			
-			/* setTimeout(refresh, 1000);
+			await mapInit()
+	
+			function setTime() {
+				const geocoder = new store.state.google.maps.Geocoder();
+				const service = new store.state.google.maps.places.PlacesService(store.state.map);
+				
+				let position = new store.state.google.maps.LatLng(selLocLat, selLocLng);
+				
+				/* setTimeout(refreshMarkers, 1000);
 
-			const t = this
-			store.state.map.addListener('click', function(e) {
-				t.location = e.latLng
-			});
-			*/
+				const t = this
+				store.state.map.addListener('click', function(e) {
+					t.location = e.latLng
+				});
+				*/
 
-			function nearbySearchCallback(results, status){
-				if (status == google.maps.places.PlacesServiceStatus.OK){
-					let restaurants = results
-					for (let i = 0; i < restaurants.length; i++){
-						function getDetailsCallback(reviews, status){
-							if (status == google.maps.places.PlacesServiceStatus.OK){
-								restaurants[i].reviews = reviews
-							}else {
-								restaurants[i].reviews = []
-							}
-						}
-						const getDetailsRequest = {
-							fields: ['reviews'],
-							placeId: restaurants[i].place_id
-						}
-						service.getDetails(getDetailsRequest, getDetailsCallback)
-					} 
-					console.log('results', restaurants)
-					store.commit('UPDATE_RESTAU', restaurants)
-				}
+
+				geocoder.geocode({ 'location' : position }, (results, status) => {
+					if (status !== 'OK' || !results[0]) {
+						throw new Error(status);
+					}
+					store.state.map.setCenter(results[0].geometry.location);
+					
+					const center = results[0].geometry.location //==> latLng
+
+					const nearbySearchRequest = {
+						location: center,
+						radius: 2000,
+						types: ['restaurant']
+					};
+
+					//infowindow = new google.maps.InfoWindow();
+
+					service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
+					
+					setTimeout(refreshMarkers, 500);
+
+				});
+				
 			}
 
+			setTimeout(setTime, 1000);
+
 			
 
-
-			geocoder.geocode({ 'location' : position }, (results, status) => {
-				//location : position
-				if (status !== 'OK' || !results[0]) {
-					throw new Error(status);
-				}
-
-				store.state.map.setCenter(results[0].geometry.location);
-				store.state.map.fitBounds(results[0].geometry.viewport);
-				
-				const center = store.state.map.getCenter()
-				console.log("center",center)
-
-				const nearbySearchRequest = {
-                    location: center,
-					radius: 2000,
-					types: ['restaurant']
-				};
-
-				//infowindow = new google.maps.InfoWindow();
-
-				service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
-				refresh()
-
-				
-
-			});
 		} catch (error) {
-			console.error(error);
+			console.error("Error: ", error);
 		}
+
+		
 		
 	},
 	methods: {

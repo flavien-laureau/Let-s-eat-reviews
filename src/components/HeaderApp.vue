@@ -30,7 +30,8 @@
 
 <script>
 import store from '../utils/restauStore';
-import refresh from '../utils/refresh';
+import refreshMarkers from '../utils/refreshMarkers';
+import refreshSearch from '../utils/refreshSearch';
 import displayReviews from '../utils/displayReviews';
 
 export default {
@@ -48,7 +49,6 @@ export default {
 		const t = this
 		function setTime() {
 			t.restaurants = store.state.restaurants
-			console.log("test",store.state.restaurants)
 		 }
 		setTimeout(setTime, 2000);
 
@@ -57,7 +57,7 @@ export default {
 	methods: {
 		search(){
 			store.commit('UPDATE_RESTAU', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax))
-			refresh()
+			refreshSearch()
 			//displayReviews() 
 		},
 		clg() {
