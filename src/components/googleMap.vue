@@ -53,7 +53,8 @@ export default {
 	},
 	async mounted() {
 		//let infowindow;
-
+		let selLocLat   = 0;
+		let selLocLng   = 0; 
 		
 
 		/* function createMarker(place) {
@@ -71,12 +72,35 @@ export default {
 			});
 		} */
 
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		};
+
+		function success(pos) {
+			var crd = pos.coords;
+			selLocLat = crd.latitude
+			selLocLng = crd.longitude
+		}
+
+		function error(err) {
+			console.warn(`ERREUR (${err.code}): ${err.message}`);
+			alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la localisation")
+		}
+
+		navigator.geolocation.getCurrentPosition(success, error, options);
+
+		
+
 		try {
-			const googleMap = await gmapsInit();
-			const geocoder = new googleMap.maps.Geocoder();
-			const map = new googleMap.maps.Map(this.$el);
+			const google = await gmapsInit();
+			const geocoder = new google.maps.Geocoder();
+			const map = new google.maps.Map(this.$el);
 			store.commit('MAP', map) //Envoie l'instance de la carte dans le store
 			const service = new google.maps.places.PlacesService(store.state.map);
+			let position = new google.maps.LatLng(selLocLat, selLocLng);
+			
 			/* setTimeout(refresh, 1000);
 
 			const t = this
@@ -84,13 +108,10 @@ export default {
 				t.location = e.latLng
 			});
 			*/
-			let selLocLat   = 0;
-			let selLocLng   = 0; 
-		
+
 			function nearbySearchCallback(results, status){
 				if (status == google.maps.places.PlacesServiceStatus.OK){
 					let restaurants = results
-					console.log(restaurants)
 					for (let i = 0; i < restaurants.length; i++){
 						function getDetailsCallback(reviews, status){
 							if (status == google.maps.places.PlacesServiceStatus.OK){
@@ -105,67 +126,44 @@ export default {
 						}
 						service.getDetails(getDetailsRequest, getDetailsCallback)
 					} 
+					console.log('results', restaurants)
 					store.commit('UPDATE_RESTAU', restaurants)
 				}
 			}
-			
-			var options = {
-				enableHighAccuracy: true,
-				timeout: 5000,
-				maximumAge: 0
-			};
-
-			function success(pos) {
-				var crd = pos.coords;
-
-				selLocLat = crd.latitude
-				selLocLng = crd.longitude
-			}
-
-			function error(err) {
-				console.warn(`ERREUR (${err.code}): ${err.message}`);
-				alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la")
-			}
-
-			navigator.geolocation.getCurrentPosition(success, error, options);
-			let position = new google.maps.LatLng(selLocLat, selLocLng);
-
-			console.log("position 1",position)
 
 			
 
-			geocoder.geocode({ address : "htdburgers" }, (results, status) => {
+
+			geocoder.geocode({ 'location' : position }, (results, status) => {
 				//location : position
 				if (status !== 'OK' || !results[0]) {
 					throw new Error(status);
 				}
-			console.log("position 2",position)
 
 				store.state.map.setCenter(results[0].geometry.location);
 				store.state.map.fitBounds(results[0].geometry.viewport);
 				
-				const center = map.getCenter()
+				const center = store.state.map.getCenter()
 				console.log("center",center)
 
 				const nearbySearchRequest = {
                     location: center,
-					radius: 500,
+					radius: 2000,
 					types: ['restaurant']
 				};
 
 				//infowindow = new google.maps.InfoWindow();
 
-				
 				service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
 				refresh()
 
 				
 
-
 			});
 		} catch (error) {
 			console.error(error);
 		}
+		
 	},
 	methods: {
 		showModal() {
