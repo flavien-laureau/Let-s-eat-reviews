@@ -83,8 +83,6 @@ export default {
 		}
 
 		setTimeout(setTime, 1000); */
-		
-		
 
 		styleList()
 	},
@@ -95,8 +93,10 @@ export default {
 	},
 	computed: {
 		filterRestau() {
+			console.log("table", store.state.restaurants)
 			return store.state.restaurants
-		}
+		},
+
 	},
 	methods: {
 		hideModal() {

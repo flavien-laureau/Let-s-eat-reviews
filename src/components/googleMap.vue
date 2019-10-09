@@ -108,23 +108,47 @@ export default {
 					store.commit('UPDATE_RESTAU', restaurants)
 				}
 			}
+			
+			var options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0
+			};
+
+			function success(pos) {
+				var crd = pos.coords;
+
+				selLocLat = crd.latitude
+				selLocLng = crd.longitude
+			}
+
+			function error(err) {
+				console.warn(`ERREUR (${err.code}): ${err.message}`);
+				alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la")
+			}
+
+			navigator.geolocation.getCurrentPosition(success, error, options);
+			let position = new google.maps.LatLng(selLocLat, selLocLng);
+
+			console.log("position 1",position)
 
 			
 
-			geocoder.geocode({ address: '52 rue antoine masson, 21130 auxonne' }, (results, status) => {
+			geocoder.geocode({ address : "htdburgers" }, (results, status) => {
+				//location : position
 				if (status !== 'OK' || !results[0]) {
 					throw new Error(status);
 				}
+			console.log("position 2",position)
+
 				store.state.map.setCenter(results[0].geometry.location);
 				store.state.map.fitBounds(results[0].geometry.viewport);
-
-				selLocLat   = results[0].geometry.location.lat();
-				selLocLng   = results[0].geometry.location.lng();
 				
-                const htdburgers = new google.maps.LatLng(selLocLat, selLocLng);
+				const center = map.getCenter()
+				console.log("center",center)
 
 				const nearbySearchRequest = {
-                    location: htdburgers,
+                    location: center,
 					radius: 500,
 					types: ['restaurant']
 				};
@@ -133,6 +157,10 @@ export default {
 
 				
 				service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
+				refresh()
+
+				
+
 
 			});
 		} catch (error) {

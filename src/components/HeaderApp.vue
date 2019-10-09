@@ -45,18 +45,19 @@ export default {
 		}
 	},
 	mounted() {
-		/* const t = this
+		const t = this
 		function setTime() {
 			t.restaurants = store.state.restaurants
+			console.log("test",store.state.restaurants)
 		 }
-		setTimeout(setTime, 1000); */
+		setTimeout(setTime, 2000);
 
 		document.querySelector('#pAddRestau').style.display = 'none'
 	},
 	methods: {
 		search(){
-			//store.commit('UPDATE_RESTAU', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax))
-			//refresh()
+			store.commit('UPDATE_RESTAU', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax))
+			refresh()
 			//displayReviews() 
 		},
 		clg() {
