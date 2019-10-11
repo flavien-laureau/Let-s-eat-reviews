@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import mapInit from '../utils/mapInit';
+//import mapInit from '../utils/mapInit';
 import store from '../utils/restauStore';
 import nearbySearchCallback from '../utils/nearbySearchCallback';
 import refreshMarkers from '../utils/refreshMarkers';
@@ -49,7 +49,7 @@ export default {
 			address: ""
 		}
 	},
-	async mounted() {
+	mounted() {
 		//let infowindow;
 		let selLocLat   = 0;
 		let selLocLng   = 0; 
@@ -92,7 +92,6 @@ export default {
 		 
 
 		try {
-			await mapInit()
 	
 			function setTime() {
 				const geocoder = new store.state.google.maps.Geocoder();

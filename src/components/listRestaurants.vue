@@ -62,9 +62,10 @@ import displayReviews from '../utils/displayReviews';
 export default {
 	store : store,
 	name: 'ListRestaurants',
+	props: ['eventBus'],
 	data() {
 		return {
-			restaurants: '',
+			restaurants: [],
 			viewReview: true,
 			viewForm: false,
 			btnReview: "Ajouter un avis",
@@ -74,15 +75,21 @@ export default {
 	},
 
 	created() {
+		const t = this
+		this.eventBus.$on('search', function(msg) {
+			t.restaurants = msg
 
+		})
+		
 	},
 	mounted() {
-		/* const t = this
+		
+		const t = this
 		function setTime() {
 			t.restaurants = store.state.restaurants
 		}
 
-		setTimeout(setTime, 1000); */
+		setTimeout(setTime, 2000);
 
 		styleList()
 	},
@@ -93,8 +100,7 @@ export default {
 	},
 	computed: {
 		filterRestau() {
-			console.log("table", store.state.restaurants)
-			//return store.state.restaurants
+			return this.restaurants
 		}
 	},
 	methods: {
@@ -111,7 +117,7 @@ export default {
 			}else if(this.btnReview === "Ajouter un avis"){
 				this.btnReview = "Voir les avis"
 				this.viewReview = false
-				this.viewForm = true			
+				this.viewForm = true
 			}
 		},
 		sendReview(index) {
@@ -123,7 +129,7 @@ export default {
 			//store.commit('ADD_REVIEW', review)
 			this.comment = ""
 			this.rate = "" */
-		}	
+		}
 	}
 }
 

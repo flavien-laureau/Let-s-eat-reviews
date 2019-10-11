@@ -9,7 +9,7 @@ export default function refreshSearch(){
 
     const nearbySearchRequest = {
         location: center,
-        radius: 2000,
+        radius: 1000,
         types: ['restaurant']
     };
     

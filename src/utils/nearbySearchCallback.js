@@ -1,7 +1,5 @@
 import store from './restauStore';
 
-
-
 export default function nearbySearchCallback(results, status){
     const service = new store.state.google.maps.places.PlacesService(store.state.map);
     

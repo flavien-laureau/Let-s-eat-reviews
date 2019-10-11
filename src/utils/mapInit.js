@@ -7,6 +7,6 @@ export default async function mapInit(){
     /* const service = new store.state.google.maps.places.PlacesService(store.state.map);
     store.commit('SERVICE', service)  */
 
-    const map = new store.state.google.maps.Map(document.querySelector('#left'), { zoom: 14 });
+    const map = new store.state.google.maps.Map(document.querySelector('#left'), { zoom: 15 });
     store.commit('MAP', map) 
 }

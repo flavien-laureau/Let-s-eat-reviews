@@ -1,23 +1,33 @@
 <template>
 	<div class="container-fluid">
-		<HeaderApp class="row"></HeaderApp>
+		<HeaderApp :event-bus="eventBus" class="row"></HeaderApp>
 		<div class="main row">
 			<GoogleMap class="col"></GoogleMap>
-			<ListRestaurants class="col"></ListRestaurants>
+			<ListRestaurants :event-bus="eventBus" class="col"></ListRestaurants>
 		</div>
 	</div>
 </template>
 
 <script>
+import Vue from 'vue';
+import mapInit from './utils/mapInit';
 import GoogleMap from './components/GoogleMap'
 import ListRestaurants from './components/ListRestaurants.vue'
 import HeaderApp from './components/HeaderApp.vue'
 
 export default {
+	data() {
+		return{
+			eventBus: new Vue()
+		}
+	},
 	components: {
 		ListRestaurants,
 		GoogleMap,
 		HeaderApp
+	},
+	async mounted() {
+		await mapInit()
 	}
 }
 </script>
