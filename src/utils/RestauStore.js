@@ -25,7 +25,10 @@ const mutations = {
         state.restaurants = reviews
     },
     ADD_REVIEW: (state, review) => {
-        state.restaurants[review.index].reviews.push({
+        if(!state.restaurants[review.index].reviews.reviews){
+            state.restaurants[review.index].reviews.reviews = []
+        }
+        state.restaurants[review.index].reviews.reviews.push({
             "rating": review.rating,
             "text": review.text
         })
@@ -35,10 +38,16 @@ const mutations = {
     }
 }
 
+const getters = {
+    restaurants: state => {
+        return state.restaurants
+      }
+}
+
 
 export default new Vuex.Store({
     state: state,
     mutations: mutations,
-    getters: {},
+    getters: getters,
     actions: {}
 })

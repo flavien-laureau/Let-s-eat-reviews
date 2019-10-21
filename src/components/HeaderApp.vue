@@ -57,14 +57,14 @@ export default {
 	},
 	methods: {
 		search(){
-			refreshSearch()	
+				refreshSearch()
 			
 			const t = this
 			function setTime() {
 				t.restaurants = store.state.restaurants
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
-			setTimeout(setTime, 1000);
+			setTimeout(setTime, 2000);
 			
 			//this.eventBus.$emit('search', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax));
 			

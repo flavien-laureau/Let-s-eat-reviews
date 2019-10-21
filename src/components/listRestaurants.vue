@@ -2,7 +2,7 @@
 	<section id="restaurants">
 		<div v-for="(restau, index) in filterRestau" :key="index" class="restau">
 			<a class="more" @click="$bvModal.show(`listAvis${index}`)">Voir les avis</a>
-			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' /></div>
+			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' :src="`https://picsum.photos/id/${index}/150/150`" /></div>
 			<h2 class="name">{{ restau.name }}</h2>
 			<hr class="hr">
 			<p class="address">{{ restau.vicinity }}</p>
@@ -15,11 +15,14 @@
 					</div>
 					<form v-show="viewForm">
 						<p>Pour ajouter un avis, remplissez le formulaire ci-dessous:</p>
-						<label for="rate" class="inp">
-							<input class="styleInput" v-model="rate" name="rate" id="rate" type="text" placeholder=" ">
-							<span class="label">Note</span>
-							<span class="border"></span>
-						</label>
+							<span class="rate">Note</span>
+							<select v-model="rate" name="rate" id="rate" class="custom-select custom-select-sm select">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
 						<hr>
 						<label for="comment" class="inp labelTextarea">
 							<textarea 
@@ -70,7 +73,7 @@ export default {
 			viewForm: false,
 			btnReview: "Ajouter un avis",
 			comment: "",
-			rate: ""
+			rate: "5"
 		}
 	},
 
@@ -86,7 +89,7 @@ export default {
 		
 		const t = this
 		function setTime() {
-			t.restaurants = store.state.restaurants
+			t.restaurants = store.getters.restaurants
 		}
 
 		setTimeout(setTime, 2000);
@@ -121,14 +124,14 @@ export default {
 			}
 		},
 		sendReview(index) {
-			/* const review = {
+			const review = {
+				index: index,
 				text: this.comment,
 				rating: this.rate
 			}
-			this.ratings[index].push(review)
-			//store.commit('ADD_REVIEW', review)
+			store.commit('ADD_REVIEW', review)
 			this.comment = ""
-			this.rate = "" */
+			this.rate = "5"
 		}
 	}
 }

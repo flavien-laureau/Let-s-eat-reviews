@@ -199,6 +199,11 @@ section#restaurants{
     width: 100%;
 }
 
+.rate{
+    color: #9098A9;
+    font-weight: 500;
+}
+
 .btnSend{
     margin: 10px 0;
 }
