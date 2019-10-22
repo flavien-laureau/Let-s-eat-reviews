@@ -60,7 +60,6 @@
 <script>
 import store from '../utils/restauStore';
 import styleList from '../utils/styleList';
-import displayReviews from '../utils/displayReviews';
 
 export default {
 	store : store,

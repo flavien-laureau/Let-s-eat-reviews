@@ -22,7 +22,7 @@
 				<option value="4">4</option>
 				<option value="5">5</option>
 			</select>
-			<button @click.prevent='search' class="button btnPrimary">Rechercher</button>
+			<button @click.prevent='search' class="button btnPrimary search">Rechercher</button>
 			<button @click.prevent='clg' class="button btnPrimary">console.log</button>
 		</form>
 	</header>
@@ -32,7 +32,6 @@
 import store from '../utils/restauStore';
 import refreshMarkers from '../utils/refreshMarkers';
 import refreshSearch from '../utils/refreshSearch';
-import displayReviews from '../utils/displayReviews';
 
 export default {
 	store : store,
@@ -57,18 +56,23 @@ export default {
 	},
 	methods: {
 		search(){
-				refreshSearch()
-			
+			document.querySelector('.search').setAttribute("disabled", "")
+			document.querySelector('.search').classList.add("disabled")
+
+			function setTimeDisabled(){
+				document.querySelector('.search').removeAttribute("disabled", "")
+				document.querySelector('.search').classList.remove("disabled")
+			}
+			setTimeout(setTimeDisabled, 2000)
+
+			refreshSearch()
+
 			const t = this
 			function setTime() {
 				t.restaurants = store.state.restaurants
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
 			setTimeout(setTime, 2000);
-			
-			//this.eventBus.$emit('search', this.restaurants.filter(restau => restau.rating >= this.keyMin && restau.rating <= this.keyMax));
-			
-			//displayReviews() 
 		},
 		clg() {
 			console.log(store.state.restaurants)

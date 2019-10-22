@@ -99,6 +99,14 @@
     background-color: #606060;
 }
 
+.disabled{
+    opacity: .4;
+}
+
+.disabled:hover{
+    background-color: #428bca;
+}
+
 /*
     GoogleMap
 */
