@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<HeaderApp :event-bus="eventBus" class="row"></HeaderApp>
 		<div class="main row">
-			<GoogleMap class="col"></GoogleMap>
+			<GoogleMap :event-bus="eventBus" class="col"></GoogleMap>
 			<ListRestaurants :event-bus="eventBus" class="col"></ListRestaurants>
 		</div>
 	</div>

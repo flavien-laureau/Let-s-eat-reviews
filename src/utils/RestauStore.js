@@ -18,12 +18,6 @@ const mutations = {
     GOOGLE: (state, google) => {
         state.google = google
     },
-    SERVICE: (state, service) => {
-        state.service = service
-    },
-    SET_REVIEWS: (state, reviews) => {
-        state.restaurants = reviews
-    },
     ADD_REVIEW: (state, review) => {
         if(!state.restaurants[review.index].reviews.reviews){
             state.restaurants[review.index].reviews.reviews = []
@@ -33,8 +27,11 @@ const mutations = {
             "text": review.text
         })
     },
-    ADD_RESTAU: (state, value) => {
+    ADD_RESTAU_STATE: (state, value) => {
         state.addRestau = value
+    },
+    PUSH_RESTAU: (state, restau) => {
+        state.restaurants.push(restau)
     }
 }
 

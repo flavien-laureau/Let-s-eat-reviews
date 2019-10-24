@@ -78,7 +78,8 @@ export default {
 			console.log(store.state.restaurants)
 		},
 		showPAddRestau(value){
-			store.commit('ADD_RESTAU', value)
+			store.commit('ADD_RESTAU_STATE', value)
+
 			if(value) {
 				document.querySelector('#pAddRestau').style.display = 'block'
 			}else{

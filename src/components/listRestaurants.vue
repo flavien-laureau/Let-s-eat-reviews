@@ -82,6 +82,10 @@ export default {
 			t.restaurants = msg
 
 		})
+		this.eventBus.$on('add_restau', function(msg) {
+			t.restaurants = msg
+
+		})
 		
 	},
 	mounted() {

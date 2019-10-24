@@ -17,7 +17,16 @@ export default function nearbySearchCallback(results, status){
                 fields: ['reviews'],
                 placeId: restaurants[i].place_id
             }
+
             service.getDetails(getDetailsRequest, getDetailsCallback)
+
+
+            if(restaurants[i].rating == undefined){
+                restaurants[i].rating = 'X'
+            }else{
+                restaurants[i].rating = restaurants[i].rating.toFixed(1)
+            }
+
         } 
         store.commit('UPDATE_RESTAU', restaurants)
     }

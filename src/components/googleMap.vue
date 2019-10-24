@@ -8,17 +8,30 @@
 			<div class="d-block text-center">
 				<form>
 					<label for="name" class="inp">
-						<input class="styleInput" v-model="name" name="name" id="name" type="text" placeholder=" ">
+						<input class="styleInput" 
+								v-model="name" 
+								name="name" 
+								id="name" 
+								type="text" 
+								placeholder=" "
+								@keypress.enter.prevent="$bvModal.hide('addRestauModal'); addRestau()">
 						<span class="label">Nom de l'établissement</span>
 						<span class="border"></span>
 					</label>
+
 					<hr>
+
 					<label for="address" class="inp">
-						<input class="styleInput" v-model="address" name="address" id="address" type="text" placeholder=" ">
+						<input class="styleInput" 
+								v-model="address" 
+								name="address" 
+								id="address" 
+								type="text" 
+								placeholder=" "
+								@keypress.enter.prevent="$bvModal.hide('addRestauModal'); addRestau()">
 						<span class="label">Adresse</span>
 						<span class="border"></span>
 					</label>
-					
 				</form>
 			</div>
 
@@ -42,9 +55,10 @@ import markers from '../utils/markers'
 export default {
 	store: store,
 	name: 'GoogleMap',
+	props: ['eventBus'],
 	data() {
 		return{
-			location: "",
+			position: "",
 			name: "",
 			address: ""
 		}
@@ -92,7 +106,8 @@ export default {
 		 
 
 		try {
-	
+			const t = this
+
 			function setTime() {
 				const geocoder = new store.state.google.maps.Geocoder();
 				const service = new store.state.google.maps.places.PlacesService(store.state.map);
@@ -101,9 +116,11 @@ export default {
 				
 				/* setTimeout(refreshMarkers, 1000);
 
-				const t = this
+				
 				store.state.map.addListener('click', function(e) {
-					t.location = e.latLng
+					t.position = e.latLng
+					console.log("mount",t.position)
+
 				});
 				*/
 
@@ -150,27 +167,34 @@ export default {
 			} */
 		},
 		addRestau() {
-			/* store.commit('ADD_RESTAU', false)
+			const restau = {
+				name: this.name,
+				vicinity: this.address,
+				rating: 5,
+				reviews: []
+			}
+			store.commit('ADD_RESTAU_STATE', false)
+			store.commit('PUSH_RESTAU', restau)
 			document.querySelector('#pAddRestau').style.display = 'none'
-			this.addMarker(this.location);
-			store.state.restaurants.push({
-					"name": this.name,
-      				"vicinity": this.address,
-					"lat":this.location.lat(),
-					"lng":this.location.lng(),
-					"rating": 5,
-					"ratings":[]
-				})
-			this.location = ""
+			this.addMarker(this.position);
+			
+			const t = this
+			function setTime() {
+				t.eventBus.$emit('add_restau', store.state.restaurants);
+			}
+			setTimeout(setTime, 1000);
+
+			this.position = ""
 			this.name = ""
-			this.address = "" */
+			this.address = ""
 		},
-		addMarker(location) {				
-			/* const marker = new google.maps.Marker({
-				position: location,
-				map: store.state.map
+		addMarker(position) {				
+			const marker = new google.maps.Marker({
+				position: position,
+				map: store.state.map,
+				animation: google.maps.Animation.DROP
 			});
-			markers.table.push(marker); */
+			markers.table.push(marker);
 		},
 		cancel() {
 			/* store.commit('ADD_RESTAU', false)
