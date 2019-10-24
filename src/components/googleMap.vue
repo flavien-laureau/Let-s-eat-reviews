@@ -68,7 +68,6 @@ export default {
 		let selLocLat   = 0;
 		let selLocLng   = 0; 
 		
-
 		/* function createMarker(place) {
 			const placeLoc = place.geometry.location;
 
@@ -114,15 +113,13 @@ export default {
 				
 				let position = new store.state.google.maps.LatLng(selLocLat, selLocLng);
 				
-				/* setTimeout(refreshMarkers, 1000);
+				setTimeout(refreshMarkers, 1000);
 
 				
 				store.state.map.addListener('click', function(e) {
 					t.position = e.latLng
-					console.log("mount",t.position)
-
 				});
-				*/
+				
 
 
 				geocoder.geocode({ 'location' : position }, (results, status) => {
@@ -162,9 +159,9 @@ export default {
 	},
 	methods: {
 		showModal() {
-			/* if(store.state.addRestau === true){
+			if(store.state.addRestau === true){
 				this.$bvModal.show('addRestauModal')
-			} */
+			}
 		},
 		addRestau() {
 			const restau = {
@@ -180,6 +177,7 @@ export default {
 			
 			const t = this
 			function setTime() {
+				console.log(t.eventBus)
 				t.eventBus.$emit('add_restau', store.state.restaurants);
 			}
 			setTimeout(setTime, 1000);
@@ -197,11 +195,11 @@ export default {
 			markers.table.push(marker);
 		},
 		cancel() {
-			/* store.commit('ADD_RESTAU', false)
+			store.commit('ADD_RESTAU_STATE', false)
 			document.querySelector('#pAddRestau').style.display = 'none'
-			this.location = ""
+			this.position = ""
 			this.name = ""
-			this.address = "" */
+			this.address = ""
 		}
 	}
 };

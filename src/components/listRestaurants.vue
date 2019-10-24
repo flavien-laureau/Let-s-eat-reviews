@@ -78,12 +78,12 @@ export default {
 
 	created() {
 		const t = this
-		this.eventBus.$on('search', function(msg) {
-			t.restaurants = msg
+		this.eventBus.$on('search', function(restaurants) {
+			t.restaurants = restaurants
 
 		})
-		this.eventBus.$on('add_restau', function(msg) {
-			t.restaurants = msg
+		this.eventBus.$on('add_restau', function(restaurants) {
+			t.restaurants = restaurants
 
 		})
 		
