@@ -49,7 +49,7 @@ export default {
 		const t = this
 		function setTime() {
 			t.restaurants = store.state.restaurants
-		 }
+		}
 		setTimeout(setTime, 2000);
 
 		document.querySelector('#pAddRestau').style.display = 'none'
@@ -72,7 +72,7 @@ export default {
 				t.restaurants = store.state.restaurants
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
-			setTimeout(setTime, 2000);
+			setTimeout(setTime, 1000);
 		},
 		clg() {
 			console.log(store.state.restaurants)

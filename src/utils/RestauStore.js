@@ -29,9 +29,6 @@ const mutations = {
     },
     ADD_RESTAU_STATE: (state, value) => {
         state.addRestau = value
-    },
-    PUSH_RESTAU: (state, restau) => {
-        state.restaurants.push(restau)
     }
 }
 

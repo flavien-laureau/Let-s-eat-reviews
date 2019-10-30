@@ -2,7 +2,7 @@
 	<section id="restaurants">
 		<div v-for="(restau, index) in filterRestau" :key="index" class="restau">
 			<a class="more" @click="$bvModal.show(`listAvis${index}`)">Voir les avis</a>
-			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' :src="`https://picsum.photos/id/${index}/150/150`" /></div>
+			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' :src="restau.img" /></div>
 			<h2 class="name">{{ restau.name }}</h2>
 			<hr class="hr">
 			<p class="address">{{ restau.vicinity }}</p>

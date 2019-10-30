@@ -50,7 +50,10 @@
 import store from '../utils/restauStore';
 import nearbySearchCallback from '../utils/nearbySearchCallback';
 import refreshMarkers from '../utils/refreshMarkers';
+import refreshSearch from '../utils/refreshSearch';
 import markers from '../utils/markers'
+import key from '../utils/apikey'
+
 
 export default {
 	store: store,
@@ -60,7 +63,9 @@ export default {
 		return{
 			position: "",
 			name: "",
-			address: ""
+			address: "",
+    		API_KEY: key()
+
 		}
 	},
 	mounted() {
@@ -127,20 +132,10 @@ export default {
 						throw new Error(status);
 					}
 					store.state.map.setCenter(results[0].geometry.location);
+
+					refreshSearch()
 					
-					const center = results[0].geometry.location //==> latLng
-
-					const nearbySearchRequest = {
-						location: center,
-						radius: 2000,
-						types: ['restaurant']
-					};
-
 					//infowindow = new google.maps.InfoWindow();
-
-					service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
-					
-					setTimeout(refreshMarkers, 500);
 
 				});
 				
@@ -164,20 +159,26 @@ export default {
 			}
 		},
 		addRestau() {
+			
 			const restau = {
 				name: this.name,
 				vicinity: this.address,
 				rating: 5,
-				reviews: []
+				reviews: [],
+				img: `https://maps.googleapis.com/maps/api/streetview?size=150x150&location=${this.position.lat()},${this.position.lng()}&key=${this.API_KEY}`
 			}
+
+			let restaurants = store.state.restaurants
+			restaurants.push(restau)
+
 			store.commit('ADD_RESTAU_STATE', false)
-			store.commit('PUSH_RESTAU', restau)
+			store.commit('UPDATE_RESTAU', restaurants)
+
 			document.querySelector('#pAddRestau').style.display = 'none'
 			this.addMarker(this.position);
 			
 			const t = this
 			function setTime() {
-				console.log(t.eventBus)
 				t.eventBus.$emit('add_restau', store.state.restaurants);
 			}
 			setTimeout(setTime, 1000);
