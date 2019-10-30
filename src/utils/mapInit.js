@@ -1,5 +1,5 @@
-import gmapsInit from '../utils/gmaps';
-import store from '../utils/restauStore';
+import gmapsInit from './gmaps';
+import store from './restauStore';
 
 export default async function mapInit(){
     const google = await gmapsInit();

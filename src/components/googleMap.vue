@@ -69,24 +69,9 @@ export default {
 		}
 	},
 	mounted() {
-		//let infowindow;
 		let selLocLat   = 0;
 		let selLocLng   = 0; 
 		
-		/* function createMarker(place) {
-			const placeLoc = place.geometry.location;
-
-			var marker = new google.maps.Marker({
-				map: store.state.map,
-				position: place.geometry.location,
-				animation: google.maps.Animation.DROP
-			});
-			
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.setContent(place.name + '<br>' + place.vicinity);
-				infowindow.open(store.state.map, this);
-			});
-		} */
 
 		var options = {
 			enableHighAccuracy: true,
@@ -118,15 +103,6 @@ export default {
 				
 				let position = new store.state.google.maps.LatLng(selLocLat, selLocLng);
 				
-				setTimeout(refreshMarkers, 1000);
-
-				
-				store.state.map.addListener('click', function(e) {
-					t.position = e.latLng
-				});
-				
-
-
 				geocoder.geocode({ 'location' : position }, (results, status) => {
 					if (status !== 'OK' || !results[0]) {
 						throw new Error(status);
@@ -134,9 +110,12 @@ export default {
 					store.state.map.setCenter(results[0].geometry.location);
 
 					refreshSearch()
-					
-					//infowindow = new google.maps.InfoWindow();
+				});
 
+				setTimeout(refreshMarkers, 1000);
+
+				store.state.map.addListener('click', function(e) {
+					t.position = e.latLng
 				});
 				
 			}

@@ -1,5 +1,7 @@
 import store from './restauStore';
 import markers from './markers'
+import infoWindow from './infoWindow'
+
 
 function addMarker(location) {
     const marker = new google.maps.Marker({
@@ -27,4 +29,6 @@ export default function refreshMarkers(){
         const position = {lat: lat, lng: lng}
         addMarker(position)		
     }
+
+    infoWindow()
 }
