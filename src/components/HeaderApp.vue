@@ -23,7 +23,6 @@
 				<option value="5">5</option>
 			</select>
 			<button @click.prevent='search' class="button btnPrimary search">Rechercher</button>
-			<button @click.prevent='clg' class="button btnPrimary">console.log</button>
 		</form>
 	</header>
 </template>
@@ -73,9 +72,6 @@ export default {
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
 			setTimeout(setTime, 1000);
-		},
-		clg() {
-			console.log(store.state.restaurants)
 		},
 		showPAddRestau(value){
 			store.commit('ADD_RESTAU_STATE', value)

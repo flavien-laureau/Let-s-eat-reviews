@@ -7,7 +7,8 @@ function addMarker(location) {
     const marker = new google.maps.Marker({
         position: location,
         map: store.state.map,
-	    animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon40.png'
     });
     markers.table.push(marker);
 }

@@ -103,6 +103,14 @@ export default {
 				
 				let position = new store.state.google.maps.LatLng(selLocLat, selLocLng);
 				
+				const marker = new google.maps.Marker({
+					position: position,
+					map: store.state.map,
+					animation: google.maps.Animation.DROP,
+					icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-circle.png'
+
+				});
+				
 				geocoder.geocode({ 'location' : position }, (results, status) => {
 					if (status !== 'OK' || !results[0]) {
 						throw new Error(status);

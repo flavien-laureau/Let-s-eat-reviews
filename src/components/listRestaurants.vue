@@ -99,8 +99,6 @@ export default {
 
 		styleList()
 	},
-	beforeUpdate() {
-	},
 	updated() {
 		styleList()
 	},
