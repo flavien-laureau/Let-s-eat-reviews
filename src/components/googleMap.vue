@@ -98,15 +98,14 @@ export default {
 			const t = this
 
 			function setTime() {
-				const geocoder = new store.state.google.maps.Geocoder();
-				const service = new store.state.google.maps.places.PlacesService(store.state.map);
+				const geocoder = new store.getters.google.maps.Geocoder();
 				
-				let position = new store.state.google.maps.LatLng(selLocLat, selLocLng);
+				let position = new store.getters.google.maps.LatLng(selLocLat, selLocLng);
 				
-				const marker = new google.maps.Marker({
+				new store.getters.google.maps.Marker({
 					position: position,
 					map: store.state.map,
-					animation: google.maps.Animation.DROP,
+					animation: store.getters.google.maps.Animation.DROP,
 					icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-circle.png'
 
 				});
@@ -155,7 +154,7 @@ export default {
 				img: `https://maps.googleapis.com/maps/api/streetview?size=150x150&location=${this.position.lat()},${this.position.lng()}&key=${this.API_KEY}`
 			}
 
-			let restaurants = store.state.restaurants
+			let restaurants = store.getters.restaurants
 			restaurants.push(restau)
 
 			store.commit('ADD_RESTAU_STATE', false)
@@ -175,10 +174,10 @@ export default {
 			this.address = ""
 		},
 		addMarker(position) {				
-			const marker = new google.maps.Marker({
+			const marker = new store.getters.google.maps.Marker({
 				position: position,
 				map: store.state.map,
-				animation: google.maps.Animation.DROP
+				animation: store.getters.google.maps.Animation.DROP
 			});
 			markers.table.push(marker);
 		},

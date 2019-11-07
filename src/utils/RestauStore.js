@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-    restaurants: '',
+    restaurants: [],
     addRestau: false
 }
 
@@ -35,7 +35,10 @@ const mutations = {
 const getters = {
     restaurants: state => {
         return state.restaurants
-      }
+    },
+    google: state => {
+        return state.google
+    },
 }
 
 

@@ -23,13 +23,13 @@
 				<option value="5">5</option>
 			</select>
 			<button @click.prevent='search' class="button btnPrimary search">Rechercher</button>
+			<button @click.prevent='clg' class="button btnPrimary search">clg</button>
 		</form>
 	</header>
 </template>
 
 <script>
 import store from '../utils/restauStore';
-import refreshMarkers from '../utils/refreshMarkers';
 import refreshSearch from '../utils/refreshSearch';
 
 export default {
@@ -47,7 +47,7 @@ export default {
 	mounted() {
 		const t = this
 		function setTime() {
-			t.restaurants = store.state.restaurants
+			t.restaurants = store.getters.restaurants
 		}
 		setTimeout(setTime, 2000);
 
@@ -67,11 +67,15 @@ export default {
 			refreshSearch()
 
 			const t = this
-			function setTime() {
-				t.restaurants = store.state.restaurants
+
+			function setTime() { 
+				t.restaurants = store.getters.restaurants
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
-			setTimeout(setTime, 1000);
+			setTimeout(setTime, 1500); 
+		},
+		clg(){
+			console.log("btn",store.getters.restaurants)
 		},
 		showPAddRestau(value){
 			store.commit('ADD_RESTAU_STATE', value)

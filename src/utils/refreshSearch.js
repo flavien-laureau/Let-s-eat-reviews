@@ -4,7 +4,7 @@ import refreshMarkers from './refreshMarkers';
 
 
 export default function refreshSearch(){
-    const service = new store.state.google.maps.places.PlacesService(store.state.map);
+    const service = new store.getters.google.maps.places.PlacesService(store.state.map);
     const center = store.state.map.getCenter() //==> latLng
 
     const nearbySearchRequest = {
@@ -15,5 +15,5 @@ export default function refreshSearch(){
     
     service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
 
-    setTimeout(refreshMarkers, 500);
+    setTimeout(refreshMarkers, 1000);
 }
