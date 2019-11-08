@@ -172,7 +172,9 @@ export default {
 			const marker = new store.getters.google.maps.Marker({
 				position: position,
 				map: store.state.map,
-				animation: store.getters.google.maps.Animation.DROP
+				animation: store.getters.google.maps.Animation.DROP,
+        		icon: 'http://maps.google.com/mapfiles/kml/pal2/icon40.png'
+
 			});
 			markers.table.push(marker);
 		},
