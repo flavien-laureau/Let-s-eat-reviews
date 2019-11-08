@@ -48,12 +48,15 @@ export default {
 		function setTime() {
 			t.restaurants = store.getters.restaurants
 		}
-		setTimeout(setTime, 2000);
+		setTimeout(setTime, 3000);
 
 		document.querySelector('#pAddRestau').style.display = 'none'
 	},
 	methods: {
 		search(){
+			const t = this
+			t.eventBus.$emit('load', [])
+
 			document.querySelector('.search').setAttribute("disabled", "")
 			document.querySelector('.search').classList.add("disabled")
 
@@ -65,13 +68,13 @@ export default {
 
 			refreshSearch()
 
-			const t = this
+			
 
 			function setTime() { 
 				t.restaurants = store.getters.restaurants
 				t.eventBus.$emit('search', t.restaurants.filter(restau => restau.rating >= t.keyMin && restau.rating <= t.keyMax));
 			}
-			setTimeout(setTime, 1500); 
+			setTimeout(setTime, 3000); 
 		},
 		showPAddRestau(value){
 			store.commit('ADD_RESTAU_STATE', value)

@@ -86,9 +86,9 @@ export default {
 			selLocLng   = 2.349014;
 			console.warn(`ERREUR (${err.code}): ${err.message}`);
 			function setTime() {
-				alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la localisation")
+				alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à votre géolocalisation")
 			}
-			setTimeout(setTime, 2300)
+			setTimeout(setTime, 3000)
 		}
 
 		navigator.geolocation.getCurrentPosition(success, error, options);
@@ -117,7 +117,7 @@ export default {
 					refreshSearch()
 				});
 
-				setTimeout(refreshMarkers, 1000);
+				setTimeout(refreshMarkers, 3000);
 
 				store.state.map.addListener('click', function(e) {
 					t.position = e.latLng

@@ -15,5 +15,5 @@ export default function refreshSearch(){
     
     service.nearbySearch(nearbySearchRequest, nearbySearchCallback);
 
-    setTimeout(refreshMarkers, 1000);
+    setTimeout(refreshMarkers, 3000);
 }

@@ -1,5 +1,6 @@
 <template>
 	<section id="restaurants">
+		<p id="load">Chargement...</p>
 		<div v-for="(restau, index) in filterRestau" :key="index" class="restau">
 			<a class="more" @click="$bvModal.show(`listAvis${index}`)">Voir les avis</a>
 			<div class="img-wrapper" @click="$bvModal.show(`listAvis${index}`)"><img class='img-restau' :src="restau.img" /></div>
@@ -78,6 +79,15 @@ export default {
 
 	created() {
 		const t = this
+		this.eventBus.$on('load', function(table) {
+			t.restaurants = table
+			document.querySelector('#load').style.display = 'block'
+			function setTime() {
+				document.querySelector('#load').style.display = 'none'
+			}
+			setTimeout(setTime, 3000);
+		})
+
 		this.eventBus.$on('search', function(restaurants) {
 			t.restaurants = restaurants
 		})
@@ -94,7 +104,7 @@ export default {
 			t.restaurants = store.getters.restaurants
 		}
 
-		setTimeout(setTime, 2000);
+		setTimeout(setTime, 3000);
 
 		styleList()
 	},
