@@ -46,9 +46,7 @@
 </template>
 
 <script>
-//import mapInit from '../utils/mapInit';
 import store from '../utils/restauStore';
-import nearbySearchCallback from '../utils/nearbySearchCallback';
 import refreshMarkers from '../utils/refreshMarkers';
 import refreshSearch from '../utils/refreshSearch';
 import markers from '../utils/markers'
@@ -65,14 +63,12 @@ export default {
 			name: "",
 			address: "",
     		API_KEY: key()
-
 		}
 	},
 	mounted() {
 		let selLocLat   = 0;
 		let selLocLng   = 0; 
 		
-
 		var options = {
 			enableHighAccuracy: true,
 			timeout: 5000,
@@ -86,13 +82,16 @@ export default {
 		}
 
 		function error(err) {
+			selLocLat   = 48.864716;
+			selLocLng   = 2.349014;
 			console.warn(`ERREUR (${err.code}): ${err.message}`);
-			alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la localisation")
+			function setTime() {
+				alert("Pour une meilleure experience utilisateur, veuillez autoriser l'accès à la localisation")
+			}
+			setTimeout(setTime, 2300)
 		}
 
 		navigator.geolocation.getCurrentPosition(success, error, options);
-
-		 
 
 		try {
 			const t = this
@@ -107,7 +106,6 @@ export default {
 					map: store.state.map,
 					animation: store.getters.google.maps.Animation.DROP,
 					icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-circle.png'
-
 				});
 				
 				geocoder.geocode({ 'location' : position }, (results, status) => {
@@ -124,12 +122,9 @@ export default {
 				store.state.map.addListener('click', function(e) {
 					t.position = e.latLng
 				});
-				
 			}
 
 			setTimeout(setTime, 1000);
-
-			
 
 		} catch (error) {
 			console.error("Error: ", error);
@@ -140,7 +135,7 @@ export default {
 	},
 	methods: {
 		showModal() {
-			if(store.state.addRestau === true){
+			if(store.state.addRestau === true && this.position){
 				this.$bvModal.show('addRestauModal')
 			}
 		},
