@@ -57,14 +57,16 @@ export default {
 			const t = this
 			t.eventBus.$emit('load', [])
 
-			document.querySelector('.search').setAttribute("disabled", "")
-			document.querySelector('.search').classList.add("disabled")
+			const btn = document.querySelector('.search')
+
+			btn.setAttribute("disabled", "")
+			btn.classList.add("disabled")
 
 			function setTimeDisabled(){
-				document.querySelector('.search').removeAttribute("disabled", "")
-				document.querySelector('.search').classList.remove("disabled")
+				btn.removeAttribute("disabled", "")
+				btn.classList.remove("disabled")
 			}
-			setTimeout(setTimeDisabled, 2000)
+			setTimeout(setTimeDisabled, 3300)
 
 			refreshSearch()
 

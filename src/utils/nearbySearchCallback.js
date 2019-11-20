@@ -14,18 +14,14 @@ export default function nearbySearchCallback(results, status){
 
         restaurants.forEach(restaurant => {
             function getDetailsCallback(reviews){
-                //console.log(reviews)
-                //console.log(reviews.reviews)
 
                     if(reviews == null || reviews == undefined) {
-                        //console.log("boucle")
                         function setTime() { 
                             service.getDetails(getDetailsRequest, getDetailsCallback)
                         }
                         setTimeout(setTime, 250); 
                     }
                     if(reviews.reviews == undefined) {
-                        //console.log('undefined !!!!!!!!!!!')
                         reviews.reviews = []
                     }
 
@@ -50,45 +46,6 @@ export default function nearbySearchCallback(results, status){
             
         });
 
-        /* for (let i = 0; i < restaurants.length; i++){
-
-            function getDetailsCallback(reviews){
-                console.log(reviews)
-                console.log(reviews.reviews)
-
-                    if(reviews == null) {
-                        console.log("boucle")
-                        function setTime() { 
-                            service.getDetails(getDetailsRequest, getDetailsCallback)
-                        }
-                        setTimeout(setTime, 300); 
-                    }
-                    if(reviews.reviews == undefined) {
-                        console.log('undefined !!!!!!!!!!!')
-                        reviews.reviews = []
-                    }
-                    restaurants[i].reviews = reviews
-                    const lat = restaurants[i].geometry.location.lat()
-                    const lng = restaurants[i].geometry.location.lng()
-                    restaurants[i].img = `https://maps.googleapis.com/maps/api/streetview?size=150x150&location=${lat},${lng}&key=${API_KEY}`
-            }
-            const getDetailsRequest = {
-                fields: ['reviews'],
-                placeId: restaurants[i].place_id
-            }
-
-
-            service.getDetails(getDetailsRequest, getDetailsCallback)
-
-
-            if(restaurants[i].rating == undefined){
-                restaurants[i].rating = 'X'
-            }else{
-                restaurants[i].rating = restaurants[i].rating.toFixed(1)
-            }
-
-
-        }  */
         store.commit('UPDATE_RESTAU', restaurants)
     }
 }

@@ -1,5 +1,5 @@
 <template>
-	<section @click="showModal" id="left">
+	<section @click="showModal" id="left"> <!-- Cette section contient l'instance de la MAP -->
 		<b-modal id="addRestauModal">
 			<template v-slot:modal-title>
 				Ajout d'un nouveau restaurant
