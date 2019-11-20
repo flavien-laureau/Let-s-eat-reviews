@@ -3,6 +3,14 @@
 ## Project setup
 ```
 npm install
+
+Le fichier "utils/apikey.js" ce trouve dans le fichier "gitignore"
+Créez ce fichier et placez-y ce code:
+
+	export default function key(){
+		return 'VOTRE API_KEY'
+	}
+
 ```
 
 ### Compiles and hot-reloads for development
